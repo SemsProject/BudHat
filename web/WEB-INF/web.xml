@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    version="2.4">
+
+    <display-name>BudHat version 2</display-name>
+    <description>
+        This is BudHat, a MVCS! :-)
+    </description>
+
+    <servlet>
+        <servlet-name>BudhatServlet</servlet-name>
+        <servlet-class>de.unirostock.sems.budhat.web.Index</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BudhatServletDiffer</servlet-name>
+        <servlet-class>de.unirostock.sems.budhat.web.Differ</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BudhatServletTree</servlet-name>
+        <servlet-class>de.unirostock.sems.budhat.web.Tree</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BudhatServletInfo</servlet-name>
+        <servlet-class>de.unirostock.sems.budhat.web.Info</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BudhatServletDownload</servlet-name>
+        <servlet-class>de.unirostock.sems.budhat.web.Download</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>de.unirostock.sems.budhat.test.Test</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BudhatServlet</servlet-name>
+        <url-pattern>/Index</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BudhatServletDiffer</servlet-name>
+        <url-pattern>/differ</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BudhatServletTree</servlet-name>
+        <url-pattern>/tree</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BudhatServletInfo</servlet-name>
+        <url-pattern>/info</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BudhatServletDownload</servlet-name>
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+    
+    <welcome-file-list>  
+        <welcome-file>Index</welcome-file>  
+    </welcome-file-list>
+
+</web-app>

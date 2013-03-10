@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+  <Resource name="jdbc/BioModelsDB"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="YourDbUser"
+            password="YourDbPass"
+            driverClassName="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://HOST:3306/DBNAME"
+            maxActive="8"
+            maxIdle="4"/>
+</Context>

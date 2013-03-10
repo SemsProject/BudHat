@@ -1,0 +1,74 @@
+<project name="BudHat" default="compile" basedir=".">
+	
+	<property file="build.properties" />
+	<property file="${user.home}/build.properties" />
+	
+	<property name="app.name" value="BudHat" />
+	<property name="app.path" value="/${app.name}" />
+	<property name="app.version" value="2.0" />
+	<property name="build.home" value="${basedir}/build" />
+	<property name="dist.home" value="${basedir}/dist" />
+	<property name="docs.home" value="${basedir}/docs" />
+	<property name="src.home" value="${basedir}/src" />
+	<property name="web.home" value="${basedir}/web" />
+	<property name="reflib.home" value="${basedir}/lib" />
+	<property name="lib.home" value="${basedir}/web/WEB-INF/lib" />
+	<property name="compile.debug" value="true" />
+	<property name="compile.deprecation" value="false" />
+	<property name="compile.optimize" value="true" />
+	
+	
+	<path id="compile.classpath">
+		<fileset dir="${reflib.home}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.home}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	
+	<target name="clean" description="Delete old build and dist directories">
+		<delete dir="${dist.home}" />
+		<delete dir="${build.home}" />
+		<delete dir="${docs.home}" />
+	</target>
+	
+	
+	<target name="compile" depends="prepare" description="Compile Java sources">
+		<mkdir dir="${build.home}/WEB-INF/classes" />
+		<javac srcdir="${src.home}" destdir="${build.home}/WEB-INF/classes" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+	
+	<target name="war" depends="compile" description="Create war file">
+		<jar jarfile="${dist.home}/${app.name}-${app.version}.war" basedir="${build.home}" />
+	</target>
+	
+	
+	<target name="javadoc" depends="compile" description="Create Javadoc API documentation">
+		
+		<mkdir dir="${dist.home}/docs/api" />
+		<javadoc sourcepath="${src.home}" destdir="${dist.home}/docs/api" packagenames="*">
+			<classpath refid="compile.classpath" />
+		</javadoc>
+	</target>
+	
+	
+	<target name="prepare">
+		<mkdir dir="${dist.home}" />
+		<mkdir dir="${docs.home}" />
+		<mkdir dir="${lib.home}" />
+		<mkdir dir="${reflib.home}" />
+		<mkdir dir="${build.home}" />
+		<mkdir dir="${build.home}/WEB-INF" />
+		<mkdir dir="${build.home}/WEB-INF/classes" />
+		<copy todir="${build.home}">
+			<fileset dir="${web.home}" />
+		</copy>
+		<mkdir dir="${build.home}/WEB-INF/lib" />
+	</target>
+	
+	
+</project>

@@ -1,0 +1,257 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family: 'Droid Sans', sans-serif;
+	margin:20px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background-color:#fff;
+	color: #004A99;
+	/*background-image:url(../images/body_bg.png)*/
+}
+
+#main
+{
+	margin-left: 400px;
+	height:100%;
+	padding:20px;
+}
+
+#header
+{
+	float: left;
+	width: 400px;
+	background-color:#004A99;
+	color: #fff;
+}
+#header h1
+{
+	padding:20px;
+}
+#header h1, #welcome
+{
+	padding-left:20px;
+	padding-right:20px;
+}
+#welcome a, #welcome a:visited, #welcome small
+{
+	color:#b9def3;/*5ca9d5;*/
+}
+a, a:active, a:visited, a:hover
+{
+	color: #002b57;
+	border-bottom: 1px solid;
+	text-decoration: none;
+}
+a.noborder
+{
+	border-style: none;
+}
+.left
+{
+	clear: both;
+	float: left;
+	width: 400px;
+	background-color:#004A99;
+	color: #fff;
+	padding-bottom:50px;
+}
+
+#navi
+{
+	text-align: right;
+	padding: 30px;
+}
+.subnavi
+{
+	margin-top:25px;
+	margin-bottom:35px;
+}
+/*.navi-active
+{
+	background-color:#004A99;
+	color: #fff;
+}*/
+#acktbl td
+{
+	margin: 10px;
+	padding: 15px 30px;
+}
+.hidden
+{
+	display: none;
+}
+
+
+#avail_models select, #selected_models select
+{
+	width: 90%;
+}
+
+.tab
+{
+	padding: 5px;
+	border: 1px solid #29AAE1;
+	font-weight: bold;
+	margin-bottom: 20px;
+	cursor:pointer;
+}
+#topnavi .tab
+{
+	background-color: #bfdfff;
+}
+.subnavi .tab
+{
+	border-top: 3px solid #004A99;
+}
+#topnavi .navi-active
+{
+	background-color:#004A99;
+	color: #fff;
+}
+.subnavi .navi-active
+{
+	background-color:#bfdfff;
+}
+
+#picdiff, #graphml_applet, #modelchooser
+{
+	text-align: center;
+}
+
+#graphdiff, #graphtree, #graphdiffflash, #graphtreeflash
+{
+	/*text-align: center;*/
+	width: 100%;
+}
+
+#graphdiff, #graphtree
+{
+	margin-top:30px;
+}
+
+#graphdiffflash, #graphtreeflash
+{
+	height: 500px;
+}
+
+.disabled{
+	font-style:italic;
+	/*text-decoration:line-through;*/
+}
+#notification
+{
+   background-color: #29AAE1;
+   padding: 10px;
+   margin-bottom: 20px;
+   color: #fff;
+}
+#err
+{
+	background-color: #aa0000;
+	padding: 10px;
+	margin-bottom: 20px;
+   color: #fff;
+}
+#model_chooser
+{
+   /*background-color:#fff;*/
+   /*margin:20px;*/
+   padding:10px
+}
+#loading
+{
+	margin-top:15px;
+}
+#about
+{
+	width:600px;
+}
+table.mymodels td
+{
+	padding: 5px;
+	margin: 3px;
+	border: 1px solid #29AAE1;
+}
+option.my_private_model, table.mymodels td.private
+{
+	background-color:#ffe2e2;
+}
+option.my_public_model, table.mymodels td.public
+{
+	background-color:#e2f1ff;
+}
+.legend
+{
+	padding: 15px;
+	float: left;
+}
+.legend img
+{
+	margin-right: 10px;
+	vertical-align:middle;
+}
+
+.yellowlegend, .redlegend, .bluelegend
+{
+	padding: 3px 5px;
+}
+.yellowlegend
+{
+	background-color: yellow;
+	color: black;
+}
+.redlegend
+{
+	background-color: red;
+	color: black;
+}
+.bluelegend
+{
+	background-color: blue;
+	color: white;
+}
+option.selected
+{
+	color: red;
+}
+#vergleichen input
+{
+	color: #004A99;
+	background-color: #fff;
+	border: 1px solid #000;
+}
+#reportdiff td
+{
+	color: black;
+}
+#reportdiff tr:nth-child(even) {background: #e6f2ff}
+#reportdiff tr:nth-child(odd) {background: #fff}
+#reportdiff th,
+#reportdiff td.highlighttd
+{
+	color: white;
+	background-color: #004A99;
+}
+#reportdiff .attr
+{
+	color: #004A99;
+}
+#reportdiff .deleted
+{
+	color: #ff4141;
+}
+#reportdiff .inserted
+{
+	color: #31c149;
+}
+#reportdiff .modified
+{
+	color: #db8838;
+}
+#reportdiff td, 
+#reportdiff th
+{
+	padding: 5px;
+}
