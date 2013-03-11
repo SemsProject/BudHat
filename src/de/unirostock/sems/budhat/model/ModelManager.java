@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.unirostock.sems.budhat.sbml;
+package de.unirostock.sems.budhat.model;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -304,7 +304,7 @@ public class ModelManager
 					
 					return db.deleteModel (currentVersion.getId ());
 				}
-				else if (request.getParameter ("publishModel") != null)
+				if (request.getParameter ("publishModel") != null)
 				{
 					// publish a model
 					String model = request.getParameter ("publishModel");
@@ -327,7 +327,7 @@ public class ModelManager
 					
 					return db.publishModel (currentVersion.getId (), true);
 				}
-				else if (request.getParameter ("unpublishModel") != null)
+				if (request.getParameter ("unpublishModel") != null)
 				{
 					// unpublish a model
 					String model = request.getParameter ("unpublishModel");
@@ -350,7 +350,7 @@ public class ModelManager
 					
 					return db.publishModel (currentVersion.getId (), false);
 				}
-				else if (request.getParameter ("addparent") != null)
+				if (request.getParameter ("addparent") != null)
 				{
 					String parent = request.getParameter ("parentchooser");
 					String model = request.getParameter ("modelid");
@@ -382,8 +382,10 @@ public class ModelManager
 						notifications.addError ("Error parsing form fields -- NFE");
 						return false;
 					}
+					System.out.println (modelid + " -->> " + parentId);
 					ModelVersion parentVersion = getVersionById (parentId);
 					ModelVersion currentVersion = getVersionById (modelid);
+					System.out.println (currentVersion + " -->> " + parentVersion);
 					if (parentVersion == null || currentVersion == null || !parentVersion.getName ().equals (currentVersion.getName ()))
 					{
 						notifications.addError ("Error parsing form fields -- no such parent");
@@ -397,7 +399,7 @@ public class ModelManager
 					
 					return db.addHierarchy (currentVersion.getId (), parentVersion.getId ());
 				}
-				else if (request.getParameter ("rmparent") != null)
+				if (request.getParameter ("rmparent") != null)
 				{
 					String parent = request.getParameter ("parent");
 					String model = request.getParameter ("modelid");

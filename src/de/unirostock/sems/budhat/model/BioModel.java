@@ -1,4 +1,4 @@
-package de.unirostock.sems.budhat.sbml;
+package de.unirostock.sems.budhat.model;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -202,7 +202,7 @@ public class BioModel
 				}
 				
 				ret += parents;
-				ret += "<form action='" + Index.WEB_URL + "' method='POST'><input type='hidden' name='modelid' value='"+models.elementAt (i).getId ()+"'><select name='parentchooser'>";
+				ret += "<form action='" + Index.WEB_URL + "?somesubmit=true' method='POST'><input type='hidden' name='modelid' value='"+models.elementAt (i).getId ()+"'><select name='parentchooser'>";
 				ret += unrelated;
 				ret += "</select><input type='submit' name='addparent' value='add parent'></form>";
 				
@@ -269,9 +269,9 @@ public class BioModel
 				Element srcElement = doc.createElement ("data");
 				srcElement.setAttribute ("key", "vers");
 				if (v.getVersion ().equals (id))
-					srcElement.appendChild (doc.createTextNode (ChemicalReactionNetwork.DELETE));
-				else if (v.getParents () == null || v.getParents ().size () < 1)
 					srcElement.appendChild (doc.createTextNode (ChemicalReactionNetwork.INSERT));
+				else if (v.getParents () == null || v.getParents ().size () < 1)
+					srcElement.appendChild (doc.createTextNode (ChemicalReactionNetwork.DELETE));
 				else
 					srcElement.appendChild (doc.createTextNode ("0"));
 				element.appendChild (srcElement);

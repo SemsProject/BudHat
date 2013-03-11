@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.unirostock.sems.budhat.sbml;
+package de.unirostock.sems.budhat.model;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -39,6 +39,8 @@ import org.xml.sax.SAXException;
 
 import de.unirostock.sems.bives.algorithm.Connector;
 import de.unirostock.sems.bives.algorithm.Producer;
+import de.unirostock.sems.bives.algorithm.cellml.CellMLConnector;
+import de.unirostock.sems.bives.algorithm.cellml.CellMLDiffInterpreter;
 import de.unirostock.sems.bives.algorithm.general.PatchProducer;
 import de.unirostock.sems.bives.algorithm.general.XyWeighter;
 import de.unirostock.sems.bives.algorithm.sbml.SBMLConnector;
@@ -60,7 +62,7 @@ import de.unirostock.sems.budhat.web.WebModule;
  * 
  * A servlet that will be querried via ajax to get a diff. It will speak to a model server to generate a diff, the resulting string will be send to the website..
  */
-public class SBMLDiffer
+public class CellMLDiffer
 {
 	
 	private static final long	serialVersionUID	= 9148294324749188855L;
@@ -77,18 +79,17 @@ public class SBMLDiffer
 		TreeDocument docB = new TreeDocument (builder.parse (new ByteArrayInputStream(bmB.getModel ().getBytes ())), new XyWeighter ());
 
 
-		Connector con = new SBMLConnector ();
+		Connector con = new CellMLConnector ();
 		con.init (docA, docB);
 		con.findConnections ();
 		
-		SBMLDiffInterpreter inter = new SBMLDiffInterpreter (con.getConnections (), docA, docB);
+		CellMLDiffInterpreter inter = new CellMLDiffInterpreter (con.getConnections (), docA, docB);
 		inter.interprete ();
 		
 		Producer patcher = new PatchProducer (con.getConnections (), docA, docB);
 		
 		Map<String, Object> json=new LinkedHashMap<String, Object>();
 		
-		json.put("crngraphml", inter.getCRNGraph ());
 		json.put("htmlreport", inter.getReport ().generateHTMLReport ());
 		json.put("xmldiff", patcher.produce ());
 		

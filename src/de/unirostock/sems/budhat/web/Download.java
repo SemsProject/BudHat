@@ -18,8 +18,8 @@ import javax.servlet.http.HttpSession;
 
 import de.unirostock.sems.budhat.db.MySQLDB;
 import de.unirostock.sems.budhat.mgmt.UserManager.User;
-import de.unirostock.sems.budhat.sbml.ModelManager;
-import de.unirostock.sems.budhat.sbml.ModelVersion;
+import de.unirostock.sems.budhat.model.ModelManager;
+import de.unirostock.sems.budhat.model.ModelVersion;
 
 
 /**

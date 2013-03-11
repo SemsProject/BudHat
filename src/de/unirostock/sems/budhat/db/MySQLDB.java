@@ -23,8 +23,8 @@ import org.apache.log4j.Logger;
 
 import de.unirostock.sems.budhat.mgmt.Notifications;
 import de.unirostock.sems.budhat.mgmt.UserManager.User;
-import de.unirostock.sems.budhat.sbml.BioModel;
-import de.unirostock.sems.budhat.sbml.ModelVersion;
+import de.unirostock.sems.budhat.model.BioModel;
+import de.unirostock.sems.budhat.model.ModelVersion;
 
 
 

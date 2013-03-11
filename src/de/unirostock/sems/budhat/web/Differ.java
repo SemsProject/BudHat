@@ -50,9 +50,9 @@ import de.unirostock.sems.budhat.mgmt.CookieManager;
 import de.unirostock.sems.budhat.mgmt.Notifications;
 import de.unirostock.sems.budhat.mgmt.UserManager;
 import de.unirostock.sems.budhat.mgmt.UserManager.User;
-import de.unirostock.sems.budhat.sbml.CellMLDiffer;
-import de.unirostock.sems.budhat.sbml.ModelVersion;
-import de.unirostock.sems.budhat.sbml.SBMLDiffer;
+import de.unirostock.sems.budhat.model.CellMLDiffer;
+import de.unirostock.sems.budhat.model.ModelVersion;
+import de.unirostock.sems.budhat.model.SBMLDiffer;
 
 
 /**

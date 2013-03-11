@@ -30,8 +30,8 @@ import de.unirostock.sems.budhat.mgmt.CookieManager;
 import de.unirostock.sems.budhat.mgmt.Notifications;
 import de.unirostock.sems.budhat.mgmt.UserManager;
 import de.unirostock.sems.budhat.mgmt.UserManager.User;
-import de.unirostock.sems.budhat.sbml.ModelManager;
-import de.unirostock.sems.budhat.sbml.ModelVersion;
+import de.unirostock.sems.budhat.model.ModelManager;
+import de.unirostock.sems.budhat.model.ModelVersion;
 
 
 

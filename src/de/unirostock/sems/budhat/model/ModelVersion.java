@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.unirostock.sems.budhat.sbml;
+package de.unirostock.sems.budhat.model;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

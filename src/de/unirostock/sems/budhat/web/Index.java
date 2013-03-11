@@ -22,8 +22,8 @@ import de.unirostock.sems.budhat.mgmt.CookieManager;
 import de.unirostock.sems.budhat.mgmt.Notifications;
 import de.unirostock.sems.budhat.mgmt.UserManager;
 import de.unirostock.sems.budhat.mgmt.UserManager.User;
-import de.unirostock.sems.budhat.sbml.BioModel;
-import de.unirostock.sems.budhat.sbml.ModelManager;
+import de.unirostock.sems.budhat.model.BioModel;
+import de.unirostock.sems.budhat.model.ModelManager;
 
 
 
@@ -54,7 +54,7 @@ public class Index
 	
 	public static void init (HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException
 	{
-		WEB_URL = request.getRequestURL().toString ();
+		//WEB_URL = request.getRequestURL().toString ();
 		
 		response.setContentType ("text/html");
 		request.setCharacterEncoding ("UTF-8");

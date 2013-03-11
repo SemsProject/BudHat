@@ -91,7 +91,7 @@ public class UserManager
 	private void checkLogin ()
 	{
 
-		if (request.getParameter ("logout")!=null)
+		if (request.getParameter ("logout")!=null && request.getParameter ("logout").equals ("logout"))
 		{
 			System.out.println ("logout: " + request.getParameter ("logout"));
 			user = null;

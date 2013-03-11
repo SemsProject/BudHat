@@ -151,8 +151,8 @@
                                <h1>My Account</h1>
                                <form action="${WEB_URL}" method="post">
                                    Your Mail:<br/><input type="text" name="usermail" value="${UserMail}" disabled="disabled" /> <small>(currently not changeable)</small><br/>
-                                   Your Password:<br/><input type="text" name="password" /><br/>
-                                   Repeat Password:<br/><input type="text" name="password-repeat" /><br/>
+                                   Your Password:<br/><input type="password" name="password" /><br/>
+                                   Repeat Password:<br/><input type="password" name="password-repeat" /><br/>
                                    <input type='submit' name='submitaccount' value='save' /><br/>
                                </form>
 							</div> <!-- myaccount -->

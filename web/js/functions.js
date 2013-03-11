@@ -35,9 +35,29 @@ function addGetParameter (param, value)
 		else
 			window.history.replaceState(null, document.title, url + '?' + param + '=' + value);
 }
+function rmGetParameter (param)
+{
+	var val = new RegExp('(\\?|\\&)' + param + '=.*?(?=(&|$))');
+	var url = window.location.toString();
+	if (val.test(url))
+	{
+		window.history.replaceState(null, document.title, url.replace(val, '$1'));
+	}
+	window.history.replaceState(null, document.title, window.location.toString().replace(/&&+/g, '&'));
+}
+
 function parseLastTime ()
 {
 	var vars = getUrlVars();
+	rmGetParameter ("logout");
+	rmGetParameter ("publishModel");
+	rmGetParameter ("deleteModel");
+	rmGetParameter ("unpublishModel");
+	rmGetParameter ("addparent");
+	rmGetParameter ("modelid");
+	rmGetParameter ("parent");
+	rmGetParameter ("rmparent");
+	rmGetParameter ("somesubmit");
 	if (vars["treeId"] && vars["treeVers"])
 	{
 		genTree (vars["treeId"], vars["treeVers"]);
