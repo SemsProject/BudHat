@@ -46,6 +46,17 @@
 		<jar jarfile="${dist.home}/${app.name}-${app.version}.war" basedir="${build.home}" />
 	</target>
 	
+	<target name="sign" depends="war" description="sign a dist">
+		<checksum file="${dist.home}/${app.name}-${app.version}.war" forceOverwrite="yes"/>
+		<move file="${dist.home}/${app.name}-${app.version}.war.MD5" tofile="${dist.home}/${app.name}-${app.version}.war.md5"/>
+		<exec executable="gpg">
+			<arg value="--output"/>
+			<arg value="${dist.home}/${app.name}-${app.version}.war.md5.sign"/>
+			<arg value="-abs"/>
+			<arg value="${dist.home}/${app.name}-${app.version}.war.md5"/>
+		</exec>
+	</target>
+	
 	
 	<target name="javadoc" depends="compile" description="Create Javadoc API documentation">
 		
