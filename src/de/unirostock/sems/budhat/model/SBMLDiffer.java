@@ -75,8 +75,7 @@ public class SBMLDiffer
 			.newDocumentBuilder ();
 		TreeDocument docA = new TreeDocument (builder.parse (new ByteArrayInputStream(bmA.getModel ().getBytes ())), new XyWeighter ());
 		TreeDocument docB = new TreeDocument (builder.parse (new ByteArrayInputStream(bmB.getModel ().getBytes ())), new XyWeighter ());
-
-
+		
 		Connector con = new SBMLConnector ();
 		con.init (docA, docB);
 		con.findConnections ();
@@ -87,16 +86,13 @@ public class SBMLDiffer
 		Producer patcher = new PatchProducer (con.getConnections (), docA, docB);
 		
 		Map<String, Object> json=new LinkedHashMap<String, Object>();
-		
+
 		json.put("crngraphml", inter.getCRNGraph ());
 		json.put("htmlreport", inter.getReport ().generateHTMLReport ());
 		json.put("xmldiff", patcher.produce ());
-		
-		
 
 		response.setContentType("application/json");
 		out.println (JSONValue.toJSONString(json));
-		
 		return true;
 	}
 }

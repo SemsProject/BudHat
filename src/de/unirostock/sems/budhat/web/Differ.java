@@ -98,14 +98,13 @@ extends WebModule
 		{
 			e.printStackTrace();
 			invalid (response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e);
-			System.out.println ("test");
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 			invalid (response, HttpServletResponse.SC_BAD_REQUEST, e);
 		}
-		
+
 		db.closeConnection ();
 	}
 	
