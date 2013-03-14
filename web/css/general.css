@@ -120,7 +120,7 @@ a.noborder
 	text-align: center;
 }
 
-#graphdiff, #graphtree, #graphdiffflash, #graphtreeflash
+#graphdiff, #graphtree, #graphdiffflash, #graphtreeflash, #graphmodelvizflash
 {
 	/*text-align: center;*/
 	width: 100%;
@@ -131,7 +131,7 @@ a.noborder
 	margin-top:30px;
 }
 
-#graphdiffflash, #graphtreeflash
+#graphdiffflash, #graphtreeflash, #graphmodelvizflash
 {
 	height: 500px;
 }

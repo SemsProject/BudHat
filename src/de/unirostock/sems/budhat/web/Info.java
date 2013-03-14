@@ -112,19 +112,10 @@ extends WebModule
 			return;
 		}
 		
+		System.out.println ("req info");
 
+		String info = getInfo (id, vers);
 		
-		
-		
-		
-		
-			System.out.println ("req info");
-
-			String info = getInfo (id, vers);
-			
-			
-			 
-			out.println (info);
-		
+		out.println (info);
 	}
 }

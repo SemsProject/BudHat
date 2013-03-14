@@ -102,7 +102,20 @@ function drawTreeFlash (graph)
 		layout: "ForceDirected",
 		visualStyle: visual_style,
 	};
+	
+	var treeFlash = new org.cytoscapeweb.Visualization("graphtreeflash", options);
+	treeFlash.draw(draw_options);
+}
 
-var treeFlash = new org.cytoscapeweb.Visualization("graphtreeflash", options);
+function drawModelVizFlash (graph)
+{
+	var draw_options = {
+		network: graph,
+		edgeLabelsVisible: true,
+		layout: "ForceDirected",
+		visualStyle: visual_style,
+	};
+
+var treeFlash = new org.cytoscapeweb.Visualization("graphmodelvizflash", options);
 	treeFlash.draw(draw_options);
 }
