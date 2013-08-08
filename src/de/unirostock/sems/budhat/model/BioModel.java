@@ -11,7 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.unirostock.sems.bives.algorithm.sbml.ChemicalReactionNetwork;
+import de.unirostock.sems.bives.ds.graph.CRN;
+import de.unirostock.sems.bives.ds.graph.GraphTranslatorGraphML;
 import de.unirostock.sems.budhat.mgmt.UserManager.User;
 import de.unirostock.sems.budhat.web.Index;
 
@@ -246,7 +247,7 @@ public class BioModel
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		Document doc = docBuilder.newDocument();
 	
-		Element graph = ChemicalReactionNetwork.addGraphMLPreamble (doc);
+		Element graph = GraphTranslatorGraphML.addGraphMLPreamble (doc);
 		
 		HashMap<Integer, ModelVersion> versionById = new HashMap<Integer, ModelVersion> ();
 		updateIdMapper (versionById);
@@ -269,9 +270,9 @@ public class BioModel
 				Element srcElement = doc.createElement ("data");
 				srcElement.setAttribute ("key", "vers");
 				if (v.getVersion ().equals (id))
-					srcElement.appendChild (doc.createTextNode (ChemicalReactionNetwork.INSERT));
+					srcElement.appendChild (doc.createTextNode (CRN.INSERT + ""));
 				else if (v.getParents () == null || v.getParents ().size () < 1)
-					srcElement.appendChild (doc.createTextNode (ChemicalReactionNetwork.DELETE));
+					srcElement.appendChild (doc.createTextNode (CRN.DELETE + ""));
 				else
 					srcElement.appendChild (doc.createTextNode ("0"));
 				element.appendChild (srcElement);

@@ -28,6 +28,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 
+import de.binfalse.bflog.LOGGER;
+import de.unirostock.sems.bives.tools.FileRetriever;
 import de.unirostock.sems.budhat.db.MySQLDB;
 import de.unirostock.sems.budhat.mgmt.CookieManager;
 import de.unirostock.sems.budhat.mgmt.Notifications;
@@ -44,7 +46,6 @@ import de.unirostock.sems.budhat.model.ModelManager;
  * 
  * A servlet that will be querried via ajax to get a diff. It will speak to a model server to generate a diff, the resulting string will be send to the website..
  */
-@WebServlet("/SBMLDiffer")
 public abstract class WebModule
 extends HttpServlet
 {
@@ -89,6 +90,10 @@ extends HttpServlet
 	protected void init (HttpServletRequest request, HttpServletResponse response, String expectedMethod)
 		throws IOException
 	{
+		LOGGER.setLogToStdErr (true);
+		LOGGER.addLevel (LOGGER.ERROR);
+		LOGGER.addLevel (LOGGER.WARN);
+		FileRetriever.FIND_LOCAL = false;
 		validRequest = false;
 		
 		System.out.println ("starting");

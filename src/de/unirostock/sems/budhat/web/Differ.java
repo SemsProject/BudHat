@@ -62,7 +62,6 @@ import de.unirostock.sems.budhat.model.SBMLDiffer;
  * 
  * A servlet that will be querried via ajax to get a diff. It will speak to a model server to generate a diff, the resulting string will be send to the website..
  */
-@WebServlet("/Differ")
 public class Differ
 extends WebModule
 {

@@ -238,11 +238,11 @@ option.selected
 {
 	color: #004A99;
 }
-#reportdiff .deleted
+#reportdiff .delete
 {
 	color: #ff4141;
 }
-#reportdiff .inserted
+#reportdiff .insert
 {
 	color: #31c149;
 }

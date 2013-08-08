@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,7 +77,7 @@ public class Download
 			response.setContentType ("application/xml");
 			response.setHeader ("Content-Disposition", "attachment; filename=\""+currentVersion.getName () + "-" + currentVersion.getVersion () + "\"");
 
-			System.out.println (currentVersion.getModel ());
+			//System.out.println (currentVersion.getModel ());
 			out.print (currentVersion.getModel ());
 			db.closeConnection ();
 			return;

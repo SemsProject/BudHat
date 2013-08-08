@@ -31,9 +31,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
-import de.unirostock.sems.bives.algorithm.cellml.CellMLValidator;
-import de.unirostock.sems.bives.algorithm.sbml.SBMLValidator;
+import de.unirostock.sems.bives.ds.cellml.CellMLDocument;
+import de.unirostock.sems.bives.ds.sbml.SBMLDocument;
 import de.unirostock.sems.bives.ds.xml.TreeDocument;
+import de.unirostock.sems.bives.tools.FileRetriever;
 import de.unirostock.sems.budhat.db.DB;
 import de.unirostock.sems.budhat.mgmt.Notifications;
 import de.unirostock.sems.budhat.mgmt.UserManager.User;
@@ -209,13 +210,30 @@ public class ModelManager
 						notifications.addError ("no model type chosen!");
 						return false;
 					}
-					
-					if (modeltype.equals ("SBML"))
+					FileRetriever.FIND_LOCAL = false;
+					try
 					{
-						try
+						DocumentBuilder builder = DocumentBuilderFactory.newInstance ()
+							.newDocumentBuilder ();
+						TreeDocument td = new TreeDocument (builder.parse (new ByteArrayInputStream(model.getBytes ())), null, null);
+					
+						if (modeltype.equals ("SBML"))
 						{
+							SBMLDocument doc = new SBMLDocument (td);
+							if (modelid == null || modelid.trim ().length () < 3)
+								modelid = doc.getModel ().getID ();
+							/*if (modelid == null || modelid.trim ().length () < 3)
+								modelid = doc.getModel ().getName ();*/
+							if (modelid == null || modelid.trim ().length () < 3)
+							{
+								LOGGER.error ("cannot read modelid from sbml file");
+								notifications.addError ("cannot read modelid from sbml file");
+								return false;
+							}
+							// check validity by bives
+							
 							// test model : can jsbml read it!?
-							SBMLValidator val = new SBMLValidator ();
+							/*SBMLValidator val = new SBMLValidator ();
 							val.validate (model);
 							if (modelid == null || modelid.trim ().length () < 3)
 								modelid = val.getModelID ();
@@ -229,18 +247,33 @@ public class ModelManager
 							// check validity by bives
 							DocumentBuilder builder = DocumentBuilderFactory.newInstance ()
 								.newDocumentBuilder ();
-							TreeDocument td = new TreeDocument (builder.parse (new ByteArrayInputStream(model.getBytes ())), null);
+							TreeDocument td = new TreeDocument (builder.parse (new ByteArrayInputStream(model.getBytes ())), null);*/
 						}
-						catch (Exception e)
+						else if (modeltype.equals ("CellML"))
 						{
-							LOGGER.error ("model cannot be parsed", e);
-							notifications.addError ("Error parsing file! " + e.getMessage ());
+							CellMLDocument doc = new CellMLDocument (td);
+							if (modelid == null || modelid.trim ().length () < 3)
+								modelid = doc.getModel ().getName ();
+							if (modelid == null || modelid.trim ().length () < 3)
+							{
+								LOGGER.error ("cannot read modelid from sbml file");
+								notifications.addError ("cannot read modelid from sbml file");
+								return false;
+							}
+						}
+						else
+						{
+							notifications.addError ("unknown model type");
 							return false;
 						}
 					}
-					else if (modeltype.equals ("CellML"))
+					catch (Exception e)
 					{
-						try
+						LOGGER.error ("model cannot be parsed", e);
+						notifications.addError ("Error parsing file! " + e.getMessage ());
+						return false;
+					}
+						/*try
 						{
 							// check validity by bives
 							System.out.println ("start parsing");
@@ -267,13 +300,7 @@ public class ModelManager
 							LOGGER.error ("model cannot be parsed", e);
 							notifications.addError ("Error parsing file! " + e.getMessage ());
 							return false;
-						}
-					}
-					else
-					{
-						notifications.addError ("unknown model type");
-						return false;
-					}
+						}*/
 					
 					db.insterModel (modelid, version, model, modeltype);
 					return true;

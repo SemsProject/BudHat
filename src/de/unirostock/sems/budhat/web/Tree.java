@@ -50,7 +50,6 @@ import de.unirostock.sems.budhat.model.BioModel;
  * 
  * A servlet that will be querried via ajax to get a diff. It will speak to a model server to generate a diff, the resulting string will be send to the website..
  */
-@WebServlet("/SBMLDiffer")
 public class Tree
 extends WebModule
 {

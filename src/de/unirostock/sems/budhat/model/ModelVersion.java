@@ -5,6 +5,7 @@ package de.unirostock.sems.budhat.model;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,10 +18,16 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 
+import de.unirostock.sems.bives.algorithm.cellml.CellMLGraphProducer;
 import de.unirostock.sems.bives.algorithm.general.XyWeighter;
-import de.unirostock.sems.bives.algorithm.sbml.SBMLModelViz;
+import de.unirostock.sems.bives.algorithm.sbml.SBMLGraphProducer;
+import de.unirostock.sems.bives.ds.cellml.CellMLDocument;
+import de.unirostock.sems.bives.ds.graph.GraphTranslatorGraphML;
+import de.unirostock.sems.bives.ds.sbml.SBMLDocument;
 import de.unirostock.sems.bives.ds.xml.TreeDocument;
-import de.unirostock.sems.bives.exception.BivesDocumentParseException;
+import de.unirostock.sems.bives.exception.BivesCellMLParseException;
+import de.unirostock.sems.bives.exception.BivesConsistencyException;
+import de.unirostock.sems.bives.exception.BivesLogicalException;
 import de.unirostock.sems.budhat.db.DB;
 import de.unirostock.sems.budhat.db.MySQLDB;
 import de.unirostock.sems.budhat.db.DB.VersionRealtives;
@@ -85,8 +92,35 @@ public class ModelVersion implements Comparable<ModelVersion>
 		info += "<p>Model Version: <em><large>" + version + "</large></em></p>";
 		info += "<p>Type: <code>" + modeltype + "</code></p>";
 		info += "<p><a href='download?downloadModel=" + id + "'>download this version</a></p>";
+		
+		try
+		{
+			if (modeltype.equals ("SBML"))
+			{
+				DocumentBuilder builder = DocumentBuilderFactory.newInstance ()
+					.newDocumentBuilder ();
+				TreeDocument docA = new TreeDocument (builder.parse (new ByteArrayInputStream(getModel ().getBytes ())), new XyWeighter (), null);
+				SBMLDocument sbmldoc = new SBMLDocument (docA);
+				SBMLGraphProducer graphProd = new SBMLGraphProducer (sbmldoc);
+				info += "<div id='graphmodelvizflash'></div><script type='text/javascript'>drawModelVizFlash ('"+new GraphTranslatorGraphML ().translate (graphProd.getCRN ()).replaceAll ("\n", "")+"');</script>";
+			}
+			else if (modeltype.equals ("CellML"))
+			{
+				DocumentBuilder builder = DocumentBuilderFactory.newInstance ()
+					.newDocumentBuilder ();
+				TreeDocument docA = new TreeDocument (builder.parse (new ByteArrayInputStream(getModel ().getBytes ())), new XyWeighter (), null);
+				CellMLDocument sbmldoc = new CellMLDocument (docA);
+				CellMLGraphProducer graphProd = new CellMLGraphProducer (sbmldoc);
+				info += "<div id='graphmodelvizflash'></div><script type='text/javascript'>drawModelVizFlash ('"+new GraphTranslatorGraphML ().translate (graphProd.getCRN ()).replaceAll ("\n", "")+"');</script>";
+			}
+		}
+		catch (ParserConfigurationException | SAXException | IOException | BivesConsistencyException | BivesCellMLParseException | BivesLogicalException | URISyntaxException e)
+		{
+			e.printStackTrace();
+				info += "<p>no visualization available ("+e.getMessage ()+")</p>";
+		}
 
-		if (modeltype.equals ("SBML"))
+		/*if (modeltype.equals ("SBML"))
 			try
 			{
 				DocumentBuilder builder = DocumentBuilderFactory.newInstance ()
@@ -103,8 +137,7 @@ public class ModelVersion implements Comparable<ModelVersion>
 			catch (ParserConfigurationException | SAXException | IOException e)
 			{
 				e.printStackTrace();
-				info += "<p>no visualization available</p>";
-			}
+			}*/
 		
 		return info + "<div>";
 	}

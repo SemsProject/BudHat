@@ -33,7 +33,6 @@ import de.unirostock.sems.budhat.model.ModelManager;
  * @author martin scharm
  * 
  */
-@WebServlet("/Index")
 public class Index
 	extends HttpServlet
 {
@@ -119,7 +118,7 @@ public class Index
 			request.setAttribute ("UserWelcome", um.getUserWelcome ());
 			request.setAttribute ("UserMail", um.getUser ().mail);
 			request.setAttribute ("DATE",
-				new SimpleDateFormat ("yyyy-MM-dd").format (new Date ()));
+				new SimpleDateFormat ("yyyy-MM-dd-HH-mm-ss").format (new Date ()));
 			request.setAttribute ("UserWelcome", um.getUserWelcome ());
 			request.setAttribute ("ProcessingErrors", errors.getErrors ());
 			request.setAttribute ("ProcessingNotifications", errors.getInfos ());

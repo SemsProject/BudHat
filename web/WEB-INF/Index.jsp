@@ -79,9 +79,9 @@
 				<div id='tree' class='hidden'>
 					<div class='subnavi'>
 						<a class='tab navi' id='graphtreetab' onclick='showGraphTree ();'>Graph</a>
-						<a class='tab navi' id='pictreetab' onclick='showPicTree ();'>Pic</a>
+						<!-- a class='tab navi' id='pictreetab' onclick='showPicTree ();'>Pic</a-->
 					</div> <!-- .subnavi -->
-					<div id='pictree' class=''>
+					<!-- div id='pictree' class=''>
 					</div><!-- #pictree -->
 					<div id='graphtree' class='hidden'>
 						<div id='graphtreeflash'>

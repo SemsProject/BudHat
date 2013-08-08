@@ -60,6 +60,7 @@ function compareModels(){
 				$("#grpahmldifftab").show ();
 				$("#graphdifftab").show ();
 				 showGraphDiff ();
+				 //alert (graph);
 			 }
 			 else
 			 {

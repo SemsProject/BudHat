@@ -20,7 +20,7 @@ var visual_style = {
 		color: {
 			defaultValue: "#ffffff",
 				discreteMapper: {
-					attrName: "surce",
+					attrName: "version",
 					entries: [
 					{ attrValue: 0, value: "#ffffff" },
 					{ attrValue: -1, value: "#ff0000" },
@@ -63,7 +63,7 @@ var visual_style = {
 		color: {
 			defaultValue: "#000000",
 				discreteMapper: {
-					attrName: "surce",
+					attrName: "version",
 					entries: [
 					{ attrValue: 1, value: "#000000" },
 					{ attrValue: -1, value: "#ff0000" },
