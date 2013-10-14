@@ -211,6 +211,7 @@ function showXMLDiff() {
 	$("#graphdiff").hide();
 	$("#graphmldiff").hide();
 	$("#xmldiff").show();
+	$("#hierarchydiff").hide();
 	$("#reportdiff").hide();
 	selectTopTab ("tab_diff");
 	selectSubTab ({'grpahmldifftab': false,'graphdifftab': false,'xmldifftab': true,'reportdifftab':false});
@@ -222,6 +223,7 @@ function showGraphmlDiff() {
 	$("#xmldiff").hide();
 	$("#graphdiff").hide();
 	$("#reportdiff").hide();
+	$("#hierarchydiff").hide();
 	$("#graphmldiff").show();
 	selectTopTab ("tab_diff");
 	selectSubTab ({'grpahmldifftab': true,'graphdifftab': false,'xmldifftab': false,'reportdifftab':false});
@@ -233,10 +235,23 @@ function showReportDiff() {
 	$("#xmldiff").hide();
 	$("#graphmldiff").hide();
 	$("#graphdiff").hide();
+	$("#hierarchydiff").hide();
 	$("#reportdiff").show();
 	selectTopTab ("tab_diff");
 	selectSubTab ({'grpahmldifftab': false,'graphdifftab': false,'xmldifftab': false,'reportdifftab':true});
 	addGetParameter ("lastContainer", "showReportDiff");
+}
+function showHierarchyDiff() {
+	hideAll();
+	$("#diff").show();
+	$("#xmldiff").hide();
+	$("#graphmldiff").hide();
+	$("#reportdiff").hide();
+	$("#graphdiff").hide();
+	$("#hierarchydiff").show();
+	selectTopTab ("tab_diff");
+	selectSubTab ({'grpahmldifftab': false,'graphdifftab': true,'xmldifftab': false,'reportdifftab':false});
+	addGetParameter ("lastContainer", "showGraphDiff");
 }
 function showGraphDiff() {
 	hideAll();
@@ -244,6 +259,7 @@ function showGraphDiff() {
 	$("#xmldiff").hide();
 	$("#graphmldiff").hide();
 	$("#reportdiff").hide();
+	$("#hierarchydiff").hide();
 	$("#graphdiff").show();
 	selectTopTab ("tab_diff");
 	selectSubTab ({'grpahmldifftab': false,'graphdifftab': true,'xmldifftab': false,'reportdifftab':false});

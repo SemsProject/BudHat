@@ -93,6 +93,7 @@ extends HttpServlet
 		LOGGER.setLogToStdErr (true);
 		LOGGER.addLevel (LOGGER.ERROR);
 		LOGGER.addLevel (LOGGER.WARN);
+		//LOGGER.addLevel (LOGGER.INFO);
 		FileRetriever.FIND_LOCAL = false;
 		validRequest = false;
 		

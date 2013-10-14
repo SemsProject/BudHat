@@ -27,6 +27,7 @@ import de.unirostock.sems.bives.ds.sbml.SBMLDocument;
 import de.unirostock.sems.bives.ds.xml.TreeDocument;
 import de.unirostock.sems.bives.exception.BivesCellMLParseException;
 import de.unirostock.sems.bives.exception.BivesConsistencyException;
+import de.unirostock.sems.bives.exception.BivesImportException;
 import de.unirostock.sems.bives.exception.BivesLogicalException;
 import de.unirostock.sems.budhat.db.DB;
 import de.unirostock.sems.budhat.db.MySQLDB;
@@ -78,7 +79,7 @@ public class ModelVersion implements Comparable<ModelVersion>
 	/**
 	 * get infos about the version in form of a html description
 	 * 
-	 * @return html desription of the model
+	 * @return html desription of the model 
 	 */
 	public String getInfo ()
 	{
@@ -114,7 +115,7 @@ public class ModelVersion implements Comparable<ModelVersion>
 				info += "<div id='graphmodelvizflash'></div><script type='text/javascript'>drawModelVizFlash ('"+new GraphTranslatorGraphML ().translate (graphProd.getCRN ()).replaceAll ("\n", "")+"');</script>";
 			}
 		}
-		catch (ParserConfigurationException | SAXException | IOException | BivesConsistencyException | BivesCellMLParseException | BivesLogicalException | URISyntaxException e)
+		catch (ParserConfigurationException | SAXException | IOException | BivesConsistencyException | BivesCellMLParseException | BivesLogicalException | URISyntaxException | BivesImportException e)
 		{
 			e.printStackTrace();
 				info += "<p>no visualization available ("+e.getMessage ()+")</p>";

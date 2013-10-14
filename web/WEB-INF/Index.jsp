@@ -87,6 +87,9 @@
 						<div id='graphtreeflash'>
 							here comes the graph
 						</div>
+						<div id='diffmatrix'>
+							here comes the matrix
+						</div>
 					</div><!-- #graphtree -->
 				</div><!-- #tree -->
 				
@@ -94,6 +97,7 @@
 					<div class='subnavi'>
 						<a class='tab navi' id='graphdifftab' onclick='showGraphDiff ();'>Graph</a>
 						<a class='tab navi' id='reportdifftab' onclick='showReportDiff ();'>Report</a>
+						<a class='tab navi' id='hierarchydifftab' onclick='showHierarchyDiff ();'>Hierarchy</a>
 						<a class='tab navi' id='xmldifftab' onclick='showXMLDiff ();'>XML-Diff</a>
 						<a class='tab navi' id='grpahmldifftab' onclick='showGraphmlDiff ();'>GraphML</a>
 					</div> <!-- .subnavi -->
@@ -102,6 +106,20 @@
 					<div id='reportdiff' class='hidden'></div>
 					<div id='graphdiff' class='hidden'>
 						<div id='graphdiffflash'>
+							here comes the graph
+						</div>
+						<p>
+							<em>Deletes</em> are colored in <span class="redlegend">red</span>, while <em>inserts</em> are <span class="bluelegend">blue</span> and <em>updates</em>, which don't affect the network, are <span class="yellowlegend">yellow</span>. 
+						</p>
+						<div class="legend"><img src="images/legend-species.png" alt="species"/> species</div>
+						<div class="legend"><img src="images/legend-reaction.png" alt="reaction"/>reaction</div>
+						<div class="legend"><img src="images/legend-reaction-participant.png" alt="participant in reaction"/>participant in reaction</div>
+						<div class="legend"><img src="images/legend-mod-stimulator.png" alt="stimulator"/> stimulator</div>
+						<div class="legend"><img src="images/legend-mod-inhibitor.png" alt="inhibitor"/>inhibitor</div>
+						<div class="legend"><img src="images/legend-mod-unknown.png" alt="unnkown modifier"/>unnkown modifier</div>
+					</div>
+					<div id='hierarchydiff' class='hidden'>
+						<div id='hierarchydiffflash'>
 							here comes the graph
 						</div>
 						<p>

@@ -49,6 +49,11 @@ public class BioModel
 		return this.description;
 	}
 	
+	public Vector<ModelVersion> getVersions ()
+	{
+		return models;
+	}
+	
 	/**
 	 * Instantiates a new bio model.
 	 * 

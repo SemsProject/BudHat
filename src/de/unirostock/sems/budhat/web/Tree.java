@@ -3,43 +3,27 @@
  */
 package de.unirostock.sems.budhat.web;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.naming.NamingException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.w3c.dom.Document;
 
+import de.binfalse.bflog.LOGGER;
 import de.unirostock.sems.bives.tools.Tools;
-import de.unirostock.sems.budhat.db.MySQLDB;
-import de.unirostock.sems.budhat.mgmt.CookieManager;
-import de.unirostock.sems.budhat.mgmt.Notifications;
-import de.unirostock.sems.budhat.mgmt.UserManager;
-import de.unirostock.sems.budhat.mgmt.UserManager.User;
+import de.unirostock.sems.bives.tools.XmlTools;
 import de.unirostock.sems.budhat.model.BioModel;
+import de.unirostock.sems.budhat.model.CellMLDiffer;
+import de.unirostock.sems.budhat.model.ModelVersion;
+import de.unirostock.sems.budhat.model.SBMLDiffer;
 
 
 
@@ -74,18 +58,18 @@ extends WebModule
 			db.closeConnection ();
 	}
 
-	private String getTree (String id, String version)
+	private String getTree (BioModel model, String version)
 	{
-		System.out.println ("generating tree: " + id + " => " + version);
-		BioModel model = mm.getModel (id);
-		
 		if (model == null)
 			return "model not found...";
+		
+		
+		System.out.println ("generating tree: " + model.getName () + " => " + version);
 			
 		try
 		{
 			Document doc = model.getGraphMLTree (version);
-			return Tools.prettyPrintDocument (doc, new Tools.SimpleOutputStream ()).toString ();
+			return XmlTools.prettyPrintDocument (doc, new Tools.SimpleOutputStream ()).toString ();
 		}
 		catch (ParserConfigurationException | IOException | TransformerException e)
 		{
@@ -116,18 +100,61 @@ extends WebModule
 
 		
 		
+		BioModel model = mm.getModel (id);
 		
 		
+		System.out.println ("req tree");
+		String tree = getTree (model, vers);
 		
-			System.out.println ("req tree");
-			String tree = getTree (id, vers);
-			
-			Map<String, Object> json=new LinkedHashMap<String, Object>();
-		  json.put("graphmltree",tree);
-
-			response.setContentType("application/json");
-			out.println (JSONValue.toJSONString(json));
-			System.out.println (JSONValue.toJSONString(json));
+		Map<String, Object> json=new LinkedHashMap<String, Object>();
+	  json.put("graphmltree",tree);
+	  
+	  Vector<ModelVersion> versions = model.getVersions ();
+	  JSONArray arr = new JSONArray ();
+	  
+	  for (int i = 0; i < versions.size (); i++)
+	  {
+	  	ModelVersion versionA = versions.elementAt (i);
+	  	for (int j = i+1; j < versions.size (); j++)
+	  	{
+		  	ModelVersion versionB = versions.elementAt (j);
+	  		JSONObject diff = new JSONObject ();
+	  		diff.put ("versionA", versionA.getVersion ());
+	  		diff.put ("versionB", versionB.getVersion ());
+  			try
+  			{
+		  		if (!versionA.getModelType ().equals (versionB.getModelType ()))
+		  			diff.put ("crndiff", null);
+		  		
+		  		else if (versionA.getModelType ().equals ("SBML"))
+		  		{
+		  				diff.put ("crndiff", SBMLDiffer.crndiff (versionA, versionB));
+		  		}
+		  		else if (versionA.getModelType ().equals ("CellML"))
+		  		{
+			  			diff.put ("crndiff", CellMLDiffer.crndiff (versionA, versionB));
+		  		}
+		  		arr.add (diff);
+  			}
+  			catch (Exception e)
+  			{
+  				LOGGER.error ("cannot create crn diff for model " + id + " versions " + versionA.getVersion () + ", " + versionB.getVersion (), e);
+  			}
+	  	}
+	  }
+	  json.put("diffs",arr);
+	  
+	  arr = new JSONArray ();
+	  for (ModelVersion v : versions)
+	  {
+	  	arr.add (v.getVersion ());
+	  }
+	  json.put("versions",arr);
+	  
+	  
+		response.setContentType("application/json");
+		out.println (JSONValue.toJSONString(json));
+		System.out.println (JSONValue.toJSONString(json));
 	}
 	
 }

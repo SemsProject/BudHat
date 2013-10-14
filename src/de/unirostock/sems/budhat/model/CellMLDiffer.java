@@ -53,8 +53,8 @@ import de.unirostock.sems.bives.exception.BivesCellMLParseException;
 import de.unirostock.sems.bives.exception.BivesConnectionException;
 import de.unirostock.sems.bives.exception.BivesConsistencyException;
 import de.unirostock.sems.bives.exception.BivesDocumentParseException;
+import de.unirostock.sems.bives.exception.BivesImportException;
 import de.unirostock.sems.bives.exception.BivesLogicalException;
-import de.unirostock.sems.bives.exception.CellMLReadException;
 import de.unirostock.sems.budhat.db.MySQLDB;
 import de.unirostock.sems.budhat.mgmt.CookieManager;
 import de.unirostock.sems.budhat.mgmt.Notifications;
@@ -74,8 +74,15 @@ public class CellMLDiffer
 {
 	
 	private static final long	serialVersionUID	= 9148294324749188855L;
+
+	public static String crndiff (ModelVersion bmA, ModelVersion bmB) throws BivesDocumentParseException, FileNotFoundException, ParserConfigurationException, SAXException, IOException, BivesConsistencyException, BivesConnectionException, BivesCellMLParseException, BivesLogicalException, URISyntaxException, BivesImportException
+	{
+		CellMLDiff differ = new CellMLDiff (bmA.getModel (), bmB.getModel ());//file1, file2);
+		differ.mapTrees ();
+		return differ.getCRNGraphML ();
+	}
 	
-	public static boolean diff (ModelVersion bmA, ModelVersion bmB, HttpServletResponse response, PrintWriter out) throws ParserConfigurationException, BivesDocumentParseException, SAXException, IOException, BivesConnectionException, BivesConsistencyException, BivesLogicalException, URISyntaxException, BivesCellMLParseException
+	public static boolean diff (ModelVersion bmA, ModelVersion bmB, HttpServletResponse response, PrintWriter out) throws ParserConfigurationException, BivesDocumentParseException, SAXException, IOException, BivesConnectionException, BivesConsistencyException, BivesLogicalException, URISyntaxException, BivesCellMLParseException, BivesImportException
 	{
 		System.out.println ("generating diff: " + bmA.toString ());
 		System.out.println ("generating diff: " + bmB.toString ());
@@ -89,6 +96,9 @@ public class CellMLDiffer
 		CellMLDiff differ = new CellMLDiff (bmA.getModel (), bmB.getModel ());//file1, file2);
 		differ.mapTrees ();
 
+		LOGGER.addLevel (LOGGER.INFO);
+		
+
 		Map<String, Object> json=new LinkedHashMap<String, Object>();
 
 		try
@@ -99,6 +109,17 @@ public class CellMLDiffer
 		{
 			LOGGER.error ("error producing crn graph: " + e.getMessage ());
 		}
+		try
+		{
+			json.put("hierarchygraphml", differ.getHierarchyGraphML ());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace ();
+			LOGGER.error ("error producing hierarchy graph: " + e.getMessage ());
+		}
+
+		LOGGER.rmLevel (LOGGER.INFO);
 		try
 		{
 			json.put("htmlreport", differ.getHTMLReport ());
@@ -117,6 +138,7 @@ public class CellMLDiffer
 		}
 
 		response.setContentType("application/json");
+		System.out.println (JSONValue.toJSONString(json));
 		out.println (JSONValue.toJSONString(json));
 		
 

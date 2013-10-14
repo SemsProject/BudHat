@@ -131,7 +131,7 @@ a.noborder
 	margin-top:30px;
 }
 
-#graphdiffflash, #graphtreeflash, #graphmodelvizflash
+#graphdiffflash, #hierarchydiffflash, #graphtreeflash, #graphmodelvizflash
 {
 	height: 500px;
 }
@@ -234,19 +234,19 @@ option.selected
 	color: white;
 	background-color: #004A99;
 }
-#reportdiff .attr
+#reportdiff .bives-attr
 {
 	color: #004A99;
 }
-#reportdiff .delete
+#reportdiff .bives-delete
 {
 	color: #ff4141;
 }
-#reportdiff .insert
+#reportdiff .bives-insert
 {
 	color: #31c149;
 }
-#reportdiff .modified
+#reportdiff .bives-modified
 {
 	color: #db8838;
 }
@@ -254,4 +254,13 @@ option.selected
 #reportdiff th
 {
 	padding: 5px;
+}
+#diffmatrix
+{
+	width:100%;
+}
+#diffmatrix td div
+{
+	min-height:100px;
+	vertical-align: middle;
 }

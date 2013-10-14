@@ -28,6 +28,7 @@ function compareModels(){
 			 var graph = data.crngraphml;
 			 var report = data.htmlreport;
 			 var xmldiff = data.xmldiff;
+			 var hierarchydiff = data.hierarchygraphml;
 			 
 			 if (report)
 			 {
@@ -50,6 +51,16 @@ function compareModels(){
 			 {
 				 $("#xmldiff").html("");
 				 $("#xmldifftab").hide ();
+			 }
+			 
+			 if (hierarchydiff)
+			 {
+				 $("#hierarchydifftab").show ();
+					drawHierarchyFlash (hierarchydiff);
+			 }
+			 else
+			 {
+				 $("#hierarchydifftab").hide ();
 			 }
 			 
 			 if (graph)
@@ -198,8 +209,89 @@ function genTree (preId, preVers){
 	
 	drawTreeFlash (graphmlTree);
 	
+	var versions = data.versions;
+	var matrix = document.getElementById("diffmatrix");
+	
+	if (matrix)
+		matrix.removeChild (matrix.firstChild);
+	
+	if (matrix && versions)
+	{
+		var table = document.createElement("table");
+		table.setAttribute ("id", "diffmatrix");
+		
+		for (var row = 0; row < versions.length; row++)
+		{
+			var tr = document.createElement("tr");
+			for (var col = 0; col < versions.length; col++)
+			{
+				if (col == row)
+				{
+					var th = document.createElement("th");
+					th.appendChild (document.createTextNode (versions[col]));
+					tr.appendChild (th);
+				}
+				else
+				{
+					var td = document.createElement("td");
+					var div = document.createElement ("div");
+					div.setAttribute ("id", "diffmatrix-" + versions[row]+"-"+versions[col]);
+					div.appendChild (document.createTextNode ("no graph available..."));
+					td.appendChild (div);
+					tr.appendChild (td);
+				}
+			}
+			table.appendChild (tr);
+		}
+		matrix.appendChild (table);
+
+		/*for (var i = 0; i < versions.length; i++)
+			for (var j = i + 1; j < versions.length; j++)
+			matrixDiff (id, versions[i], versions[j]);*/
+	}
+	
+	console.log (data);
+	
+	if (data.diffs)
+	{
+		for (var i = 0; i < data.diffs.length; i++)
+		{
+			var diff = data.diffs[i];
+			if (diff.crndiff)
+			{
+				drawMatrixFlash (diff.crndiff, "diffmatrix-" + diff.versionA + "-" + diff.versionB);
+				drawMatrixFlash (diff.crndiff, "diffmatrix-" + diff.versionB + "-" + diff.versionA);
+			}
+			else
+			{
+				var div = document.getElementById("diffmatrix-" + diff.versionA + "-" + diff.versionB);
+				div.replaceChild (document.createTextNode ("unable to produce graph"), div.firstChild);
+				div = document.getElementById("diffmatrix-" + diff.versionB + "-" + diff.versionA);
+				div.replaceChild (document.createTextNode ("unable to produce graph"), div.firstChild);
+			}
+		}
+	}
+	
+	
         
 		 showGraphTree ();
 					});
 
 }
+
+/*function matrixDiff (model, versionA, versionB)
+{
+	$.post("differ", { 
+		modelA:  model, versionA: versionA, 
+		modelB:  model, versionB: versionB,
+		get: "crn"
+		},
+		 function(data) {
+			if (data.crngraphml)
+			{
+				drawMatrixFlash (graph, "diffmatrix-" + versionA + "-" + versionB);
+				drawMatrixFlash (graph, "diffmatrix-" + versionB + "-" + versionA);
+			}
+		}
+		);
+}*/

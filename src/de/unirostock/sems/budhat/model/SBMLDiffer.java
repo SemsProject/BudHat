@@ -81,6 +81,13 @@ public class SBMLDiffer
 		return file;
 	}*/
 	
+	public static String crndiff (ModelVersion bmA, ModelVersion bmB) throws BivesDocumentParseException, FileNotFoundException, ParserConfigurationException, SAXException, IOException, BivesConsistencyException, BivesConnectionException
+	{
+		SBMLDiff differ = new SBMLDiff (bmA.getModel (), bmB.getModel ());
+		differ.mapTrees ();
+		return differ.getCRNGraphML ();
+	}
+	
 	public static boolean diff (ModelVersion bmA, ModelVersion bmB, HttpServletResponse response, PrintWriter out) throws ParserConfigurationException, BivesDocumentParseException, SAXException, IOException, BivesConnectionException, BivesConsistencyException
 	{
 

@@ -31,6 +31,9 @@ var visual_style = {
 		},
 		labelHorizontalAnchor: "center",
 		label: {passthroughMapper: { attrName: "name" }},
+		compoundLabel: { passthroughMapper: { attrName: "name" } } ,
+		compoundShape: "RECTANGLE",
+		compoundBorderWidth: 1,
 		tooltipText: "test"
 	},
 	edges: {
@@ -86,7 +89,7 @@ function drawDiffFlash (graph)
 	var draw_options = {
 		network: graph,
 		edgeLabelsVisible: true,
-		layout: "ForceDirected",
+		layout: "CompoundSpringEmbedder",
 		visualStyle: visual_style,
 	};
 	
@@ -99,7 +102,7 @@ function drawTreeFlash (graph)
 	var draw_options = {
 		network: graph,
 		edgeLabelsVisible: true,
-		layout: "ForceDirected",
+		layout: "CompoundSpringEmbedder",
 		visualStyle: visual_style,
 	};
 	
@@ -107,12 +110,39 @@ function drawTreeFlash (graph)
 	treeFlash.draw(draw_options);
 }
 
+function drawMatrixFlash (graph, div)
+{
+	var draw_options = {
+		network: graph,
+		edgeLabelsVisible: true,
+		layout: "CompoundSpringEmbedder",
+		visualStyle: visual_style,
+		panZoomControlVisible: false 
+	};
+	
+	var flash = new org.cytoscapeweb.Visualization(div, options);
+	flash.draw(draw_options);
+}
+
+function drawHierarchyFlash (graph)
+{
+	var draw_options = {
+		network: graph,
+		edgeLabelsVisible: true,
+		layout: "CompoundSpringEmbedder",
+		visualStyle: visual_style,
+	};
+	
+	var diffFlash = new org.cytoscapeweb.Visualization("hierarchydiffflash", options);
+	diffFlash.draw(draw_options);
+}
+
 function drawModelVizFlash (graph)
 {
 	var draw_options = {
 		network: graph,
 		edgeLabelsVisible: true,
-		layout: "ForceDirected",
+		layout: "CompoundSpringEmbedder",
 		visualStyle: visual_style,
 	};
 
