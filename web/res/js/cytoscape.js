@@ -79,8 +79,8 @@ var visual_style = {
 };
 
 var flashOptions = {
-	swfPath: "/budhat/res/swf/CytoscapeWeb",
-	flashInstallerPath: "/budhat/res/swf/playerProductInstall"
+	swfPath: "res/swf/CytoscapeWeb",
+	flashInstallerPath: "res/swf/playerProductInstall"
 };
 
 
