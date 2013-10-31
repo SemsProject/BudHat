@@ -12,20 +12,15 @@
         <script type="text/javascript" src="js/min/AC_OETags.min.js"></script>
         <script type="text/javascript" src="js/min/cytoscapeweb.min.js"></script>
 		<script type='text/javascript' src='js/jquery-1.7.1.js' charset='UTF-8'></script>
-		<script type='text/javascript' src='js/jquery-ui-1.8.19.custom.min.js' charset='UTF-8'></script>
 		<script type='text/javascript' src='js/functions.js' charset='UTF-8'></script>
 		<script type='text/javascript' src='js/view.js' charset='UTF-8'></script>
 		<script type='text/javascript' src='js/ajax.js' charset='UTF-8'></script>
-		<script type='text/javascript' src='js/jquery.snippet.js' charset='UTF-8'></script>
-		<script type='text/javascript' src='js/jquery.tipsy-1.7.js' charset='UTF-8'></script>
-		<script type='text/javascript' src='js/jquery.cluetip.all.min.js' charset='UTF-8'></script>
-		<script type='text/javascript' src='js/jquery.hoverIntent.js' charset='UTF-8'></script>
+		<script type='text/javascript' src='js/cytoscapejs/cytoscape.js-2.0.2/arbor.js' charset='UTF-8'></script>
+		<script type='text/javascript' src='js/cytoscapejs/cytoscape.js-2.0.2/cytoscape.min.js' charset='UTF-8'></script>
+		<script type='text/javascript' src='js/cytoscape-js.js' charset='UTF-8'></script>
+		<script type='text/javascript' src='js/highlight.js/highlight.pack.js' charset='UTF-8'></script>
 		<link href='css/general.css' rel='stylesheet' type='text/css'  />
-		<link href='css/jquery-ui-1.8.19.custom.css' rel='stylesheet' type='text/css'  />
-		<link href='css/jquery.snippet.css' rel='stylesheet' type='text/css'  />
-		<link href='css/tipsy-1.7.css' rel='stylesheet' type='text/css'  />
-		<link href='css/jquery.cluetip.css' rel='stylesheet' type='text/css'  />
-		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:700' rel='stylesheet' type='text/css' />
+		<link href='js/highlight.js/styles/tomorrow.css' rel='stylesheet' type='text/css'  />
 	</head>
 	
 	<body>
@@ -37,7 +32,10 @@
 				</div><!-- #navi -->
 				${UserWelcome}
 			</div><!-- # header-->
-			<div class='left' id='left'>
+			
+			
+			
+			<div class='left' id='left'>// TODO: all onclicks weg
 				<div id='modelchooser'>
 						<div id='avail_models'>
 							<h1>available models</h1>
@@ -60,27 +58,36 @@
 						<div id='vergleichen'><input onClick='compareModels();' type='submit' name='unwichtig' value='compare' /></div>
 				</div><!-- #modelchooser -->
 			</div><!-- #header -->
+			
+			
+			
 			<div id='main'>
 				${ProcessingErrors}
 				${ProcessingNotifications}
 				<div id="topnavi">
-					<a class='tab navi' id="tab_main" onclick='showAbout ();'>Main</a>
-					<a class='tab navi' id="tab_user" onclick='showUser ();'>User</a>
-					<a class='tab navi hidden' id="tab_info" onclick='showInfo ();'>Info</a>
-					<a class='tab navi hidden' id="tab_diff" onclick='showDiff ();'>Diff</a>
-					<a class='tab navi hidden' id="tab_tree" onclick='showTree ();'>Tree</a>
+					<a class='tab navi' id="tab_main">Main</a>
+					<a class='tab navi' id="tab_user">User</a>
+					<a class='tab navi hidden' id="tab_info">Info</a>
+					<a class='tab navi hidden' id="tab_diff">Diff</a>
+					<a class='tab navi hidden' id="tab_tree">Tree</a>
 				</div>
+				
+				
 				<div id='loading' class='hidden'>
 					<img src='images/loading142.gif' title='loading...' alt='loading...' />
 				</div><!-- #loading -->
-				<div id='info' class='hidden'>
+				
+				
+				<div id='tab_info_content' class='hidden'>
 					<p>modelinfo</p>
 				</div><!-- #loading -->
-				<div id='tree' class='hidden'>
-					<div class='subnavi'>
+				
+				
+				<div id='tab_tree_content' class='hidden'>
+					<!-- div class='subnavi'>
 						<a class='tab navi' id='graphtreetab' onclick='showGraphTree ();'>Graph</a>
-						<!-- a class='tab navi' id='pictreetab' onclick='showPicTree ();'>Pic</a-->
-					</div> <!-- .subnavi -->
+						<!--a class='tab navi' id='pictreetab' onclick='showPicTree ();'>Pic</a>
+					</div--> <!-- .subnavi -->
 					<!-- div id='pictree' class=''>
 					</div><!-- #pictree -->
 					<div id='graphtree' class='hidden'>
@@ -93,47 +100,56 @@
 					</div><!-- #graphtree -->
 				</div><!-- #tree -->
 				
-				<div id='diff' class='hidden'>
+				
+				
+				<div id='tab_diff_content' class='hidden'>
 					<div class='subnavi'>
-						<a class='tab navi' id='graphdifftab' onclick='showGraphDiff ();'>Graph</a>
-						<a class='tab navi' id='reportdifftab' onclick='showReportDiff ();'>Report</a>
-						<a class='tab navi' id='hierarchydifftab' onclick='showHierarchyDiff ();'>Hierarchy</a>
-						<a class='tab navi' id='xmldifftab' onclick='showXMLDiff ();'>XML-Diff</a>
-						<a class='tab navi' id='grpahmldifftab' onclick='showGraphmlDiff ();'>GraphML</a>
+						<a class='tab navi' id='subtab_graph'>Graph</a>
+						<a class='tab navi' id='subtab_report'>Report</a>
+						<a class='tab navi' id='subtab_hierarchy'>Hierarchy</a>
+						<a class='tab navi' id='subtab_xml'>XML-Diff</a>
 					</div> <!-- .subnavi -->
-					<div id='xmldiff' class=''></div>
-					<div id='graphmldiff' class='hidden'></div>
-					<div id='reportdiff' class='hidden'></div>
-					<div id='graphdiff' class='hidden'>
-						<div id='graphdiffflash'>
+					<div id='subtab_xml_content' class='hidden'></div>
+					<div id='subtab_report_content' class='hidden'></div>
+					<div id='subtab_graph_content' class=''>
+						<div id='subtab_graph_graph'>
 							here comes the graph
 						</div>
-						<p>
-							<em>Deletes</em> are colored in <span class="redlegend">red</span>, while <em>inserts</em> are <span class="bluelegend">blue</span> and <em>updates</em>, which don't affect the network, are <span class="yellowlegend">yellow</span>. 
-						</p>
-						<div class="legend"><img src="images/legend-species.png" alt="species"/> species</div>
-						<div class="legend"><img src="images/legend-reaction.png" alt="reaction"/>reaction</div>
-						<div class="legend"><img src="images/legend-reaction-participant.png" alt="participant in reaction"/>participant in reaction</div>
-						<div class="legend"><img src="images/legend-mod-stimulator.png" alt="stimulator"/> stimulator</div>
-						<div class="legend"><img src="images/legend-mod-inhibitor.png" alt="inhibitor"/>inhibitor</div>
-						<div class="legend"><img src="images/legend-mod-unknown.png" alt="unnkown modifier"/>unnkown modifier</div>
+						<div id='legend'>
+							<p>
+								<em>Deletes</em> are colored in <span class="redlegend">red</span>, while <em>inserts</em> are <span class="bluelegend">blue</span> and <em>updates</em>, which don't affect the network, are <span class="yellowlegend">yellow</span>. 
+							</p>
+							<div class="legend"><img src="images/legend-species.png" alt="species"/> species</div>
+							<div class="legend"><img src="images/legend-reaction.png" alt="reaction"/>reaction</div>
+							<div class="legend"><img src="images/legend-reaction-participant.png" alt="participant in reaction"/>participant in reaction</div>
+							<div class="legend"><img src="images/legend-mod-stimulator.png" alt="stimulator"/> stimulator</div>
+							<div class="legend"><img src="images/legend-mod-inhibitor.png" alt="inhibitor"/>inhibitor</div>
+							<div class="legend"><img src="images/legend-mod-unknown.png" alt="unnkown modifier"/>unnkown modifier</div>
+						</div>
+						<div id='subtab_graph_code'></div>
 					</div>
-					<div id='hierarchydiff' class='hidden'>
-						<div id='hierarchydiffflash'>
+					<div id='subtab_hierarchy_content' class='hidden'>
+						<div id='subtab_hierarchy_graph'>
 							here comes the graph
 						</div>
-						<p>
-							<em>Deletes</em> are colored in <span class="redlegend">red</span>, while <em>inserts</em> are <span class="bluelegend">blue</span> and <em>updates</em>, which don't affect the network, are <span class="yellowlegend">yellow</span>. 
-						</p>
-						<div class="legend"><img src="images/legend-species.png" alt="species"/> species</div>
-						<div class="legend"><img src="images/legend-reaction.png" alt="reaction"/>reaction</div>
-						<div class="legend"><img src="images/legend-reaction-participant.png" alt="participant in reaction"/>participant in reaction</div>
-						<div class="legend"><img src="images/legend-mod-stimulator.png" alt="stimulator"/> stimulator</div>
-						<div class="legend"><img src="images/legend-mod-inhibitor.png" alt="inhibitor"/>inhibitor</div>
-						<div class="legend"><img src="images/legend-mod-unknown.png" alt="unnkown modifier"/>unnkown modifier</div>
+						<div id='legend'>
+							<p>
+								<em>Deletes</em> are colored in <span class="redlegend">red</span>, while <em>inserts</em> are <span class="bluelegend">blue</span> and <em>updates</em>, which don't affect the network, are <span class="yellowlegend">yellow</span>. 
+							</p>
+							<div class="legend"><img src="images/legend-species.png" alt="species"/> species</div>
+							<div class="legend"><img src="images/legend-reaction.png" alt="reaction"/>reaction</div>
+							<div class="legend"><img src="images/legend-reaction-participant.png" alt="participant in reaction"/>participant in reaction</div>
+							<div class="legend"><img src="images/legend-mod-stimulator.png" alt="stimulator"/> stimulator</div>
+							<div class="legend"><img src="images/legend-mod-inhibitor.png" alt="inhibitor"/>inhibitor</div>
+							<div class="legend"><img src="images/legend-mod-unknown.png" alt="unnkown modifier"/>unnkown modifier</div>
+						</div>
+						<div id='subtab_hierarchy_code'></div>
 					</div>
 				</div><!-- #diff -->
-				<div id='about' class=''>
+				
+				
+				
+				<div id='tab_main_content' class=''>
 					<h1>BudHat</h1>
 					<p>BudHat is an implementation of the research work done in the <a href='http://sems.uni-rostock.de'>SEMS project</a>. Its main purpose is to demonstrate the capabilities of difference detection and visualization of computational models. Budhat is developed at the <a href='http://www.uni-rostock.de/'>University of Rostock</a>.<br /><br />
 					Read more about BudHat at <a href="http://sems.uni-rostock.de/budhat/">http://sems.uni-rostock.de/budhat/</a>.
@@ -146,16 +162,16 @@
 					</table>
 				</div><!-- #about -->
 				
-				<div id='user' class='hidden'>
+				<div id='tab_user_content' class='hidden'>
 					<c:choose>
 						<c:when test="${UserValid}">
 							<div class='subnavi'>
-								<a class='tab navi' id='mymodelstab' onclick='showMyModels ();'>My Models</a>
-								<a class='tab navi' id='myaccounttab' onclick='showMyAccount ();'>My Account</a>
+								<a class='tab navi' id='subtab_models' onclick='showMyModels ();'>My Models</a>
+								<a class='tab navi' id='subtab_account' onclick='showMyAccount ();'>My Account</a>
 								<!--a class='tab navi' onclick='showPicDiff ();'>pic</a-->
 							</div> <!-- .subnavi -->
-							<div id='mymodels' class=''>
-								<h1>My Models</h1>
+							<div id='subtab_models_content' class=''>
+															<h1>My Models</h1>
                                <form action="${WEB_URL}" method="post" enctype="multipart/form-data">
                                    Upload new model: <input type="file" name="newsbmlfile" /><br />
                                    Model ID: <input type="text" name="modelid" value="" /> <small>(at least 3 characters, leave blank to parse from file)</small><br />
@@ -165,7 +181,7 @@
                                </form>
                                ${UserModels}
 							</div> <!-- mymodels -->
-							<div id='myaccount' class='hidden'>
+							<div id='subtab_account_content' class='hidden'>
                                <h1>My Account</h1>
                                <form action="${WEB_URL}" method="post">
                                    Your Mail:<br/><input type="text" name="usermail" value="${UserMail}" disabled="disabled" /> <small>(currently not changeable)</small><br/>

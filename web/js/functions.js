@@ -1,16 +1,67 @@
+function startsWith (str, prefix)
+{
+        return str.indexOf(prefix) == 0;
+}
+
+function endsWith(str, suffix)
+{
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+
 // Tabs initialisieren
 $(document).ready(function() {
-	$( "#tabs" ).tabs();
+	//$( "#tabs" ).tabs();
 	
 	// Tipsy initialisieren
-	$(".tipsy").tipsy({
+	/*$(".tipsy").tipsy({
 			gravity:'s',
 			opacity: 1,
 			live: true,
 		  html: true,
 		  fade: false
-		});
+		});*/
+	$(".tab").click( function(){
+//	    console.log ("click");
+//	    console.log (this.id);
+
+	                // for each parent get children
+	                // -> starts with id / tab / subtab = visible
+	                // otherwise hidden
+
+
+		var containers = this.parentNode.children;
+		for (var i = 0; i < containers.length; i++)
+		if (containers[i].id == this.id)
+		                containers[i].className = containers[i].className + " navi-active";
+		                else
+		                containers[i].className = containers[i].className.replace(/\bnavi-active\b/,'');
+
+	containers = this.parentNode.parentNode.children;
+	for (var i = 0; i < containers.length; i++)
+	if (endsWith (containers[i].id, "content"))
+	{
+	        if (startsWith (containers[i].id, this.id))
+	        {
+	                containers[i].style.display = "block";
+	        }
+	        else
+	        {
+	                containers[i].style.display = "none";
+	        }
+//	      console.log (containers[i].id);
+	}
+
+	     });
+
 });
+
+
+
+
+
+
+
 
 function getUrlVars()
 {
@@ -133,7 +184,7 @@ function removeSelect()
 
 var topTabs=["tab_main","tab_user","tab_info","tab_diff","tab_tree"];
 
-function selectTopTab (id)
+/*function selectTopTab (id)
 {
 	for (var t in topTabs)
 	{
@@ -310,7 +361,7 @@ function showGraphTree() {
 	selectTopTab ("tab_tree");
 	selectSubTab ({'graphtreetab': true,'pictreetab': false});
 	addGetParameter ("lastContainer", "showGraphTree");
-}
+}*/
 
 // JS variante des PHP-Befehls "htmlspecialchars();"
 function escapeHtml(unsafe) {
@@ -321,7 +372,12 @@ function escapeHtml(unsafe) {
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
 }
-
+function removeChildren (elem)
+{
+	while (elem.firstChild)
+		elem.removeChild(elem.firstChild);
+}
+/*
 function escapeKaufmannsUnd(unsafe) {
   return unsafe.replace(/&/g, "&amp;");
 }
@@ -330,4 +386,4 @@ function unescapeHtml(safe) {
   return safe
       .replace(/&lt;/g, "<")
       .replace(/&gt;/g, ">");
-}
+}*/

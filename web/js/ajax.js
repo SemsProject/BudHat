@@ -1,7 +1,7 @@
 function compareModels(){
 	var Opts = document.getElementById('selected').options;
 	if (Opts.length == 2){
-		showLoading();
+		//TODO: showLoading();
 		
 		var tmp = Opts[0].value.split("|");
 		var idA = tmp[0];
@@ -24,73 +24,190 @@ function compareModels(){
 						modelB:  idB, versionB: versB
 						},
 		 function(data) {
+							
+							var crnjson = data.crnjson;
+							var crndot = data.crndot;
+							var crngraphml = data.crngraphml;
+							var hierarchygraphml = data.hierarchygraphml;
+							var hierarchyjson = data.hierarchyjson;
+							var hierarchydot = data.hierarchydot;
+							var htmlreport = data.htmlreport;
+							var xmldiff = data.xmldiff;
 			 
-			 var graph = data.crngraphml;
-			 var report = data.htmlreport;
-			 var xmldiff = data.xmldiff;
-			 var hierarchydiff = data.hierarchygraphml;
-			 
-			 if (report)
+			 if (htmlreport)
 			 {
-				 $("#reportdiff").html (report);
-				$("#reportdifftab").show ();
+				 $("#subtab_report_content").html (htmlreport);
+				$("#subtab_report").show ();
 			 }
 			 else
 			 {
-				 $("#reportdiff").html ("");
-				 $("#reportdifftab").hide ();
+				 $("#subtab_report_content").html ("");
+				 $("#subtab_report").hide ();
 			 } 
+			 
+			 
 			 
 			 if (xmldiff)
 			 {
-				 $("#xmldifftab").show ();
-				$("#xmldiff").html("<pre id='xmldiffpre'>" + escapeHtml(unescapeHtml(xmldiff)) + "</pre>");
-				$("#xmldiffpre").snippet("xml",{style:"acid"});
+				$("#subtab_xml").show ();
+				
+				//$("#subtab_xml_content").html("<pre id='subtab_xml_content_pre'>" + escapeHtml(xmldiff) + "</pre>");
+				//$("#subtab_xml_content_pre").snippet("xml",{style:"acid"});
+				
+				 var xmlcont = document.getElementById("subtab_xml_content");
+				 removeChildren (xmlcont);
+				 var pre = document.createElement("pre");
+					xmlcont.appendChild (pre);
+					pre.id = "subtab_xml_content_pre"
+					pre.setAttribute ("class", "xml");
+					pre.innerHTML = escapeHtml(xmldiff);
+					hljs.highlightBlock(pre);
 			 }
 			 else
 			 {
-				 $("#xmldiff").html("");
-				 $("#xmldifftab").hide ();
+				 $("#subtab_xml_content").html("");
+				 $("#subtab_xml").hide ();
 			 }
 			 
-			 if (hierarchydiff)
+			 
+			 
+			 
+			 if (hierarchyjson)
 			 {
-				 $("#hierarchydifftab").show ();
-					drawHierarchyFlash (hierarchydiff);
+				 $("#subtab_hierarchy").show ();
+					//drawHierarchyFlash (hierarchydiff);
+				 var code = document.getElementById("subtab_hierarchy_code");
+				 var pre = document.createElement("pre");
+				 pre.id = "hierarchypre";
+				 if (hierarchygraphml)
+				 {
+					 var link = document.createElement("button");
+					 link.appendChild(document.createTextNode(" show graphml "));
+					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (hierarchygraphml);
+							pre.setAttribute ("class", "xml");
+							hljs.highlightBlock(pre);
+						 
+						 
+					}, false);
+					 code.appendChild (link);
+				 }
+				 
+				 if (hierarchydot)
+				{
+					 var link = document.createElement("button");
+					 link.appendChild(document.createTextNode(" show dot "));
+					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (hierarchydot);
+							pre.setAttribute ("class", "");
+							hljs.highlightBlock(pre);
+						 
+					}, false); 
+					 code.appendChild (link);
+				}
+				 
+				 if (hierarchyjson)
+				{
+					 var link = document.createElement("button");
+					 link.appendChild(document.createTextNode(" show json "));
+					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (JSON.stringify(JSON.parse(hierarchyjson), null, 4))
+						 pre.setAttribute ("class", "json");
+							hljs.highlightBlock(pre);
+						 
+					}, false); 
+					 code.appendChild (link);
+				}
+				 code.appendChild (pre);
+				 drawDiffHierarchyJS (hierarchyjson);
 			 }
 			 else
 			 {
-				 $("#hierarchydifftab").hide ();
+				 $("#subtab_hierarchy").hide ();
+				 $("#subtab_hierarchy_code").html("");
 			 }
 			 
-			 if (graph)
+			 
+			 
+			 
+			 if (crnjson)
 			 {
-				$("#graphmldiff").html("<pre id='graphmldiffpre'>" + escapeHtml(unescapeHtml(graph)) + "</pre>");
+				/*$("#graphmldiff").html("<pre id='graphmldiffpre'>" + escapeHtml(unescapeHtml(graph)) + "</pre>");
 				$("#graphmldiffpre").snippet("xml",{style:"acid"});
 				drawDiffFlash (graph);
 				$("#grpahmldifftab").show ();
 				$("#graphdifftab").show ();
 				 showGraphDiff ();
-				 //alert (graph);
+				 //alert (graph);*/
+
+				 $("#subtab_graph").show ();
+					//drawHierarchyFlash (hierarchydiff);
+				 var code = document.getElementById("subtab_graph_code");
+				 removeChildren (code);
+				 var pre = document.createElement("pre");
+				 pre.id = "graphpre";
+				 if (crngraphml)
+				{
+					 var link = document.createElement("button");
+					 link.appendChild(document.createTextNode(" show graphml "));
+					 link.addEventListener("click", function ()
+						 {
+						 	pre.innerHTML = escapeHtml (crngraphml);
+						 	// TODO: delete jquery bullshit
+						 	/*$("#graphpre").snippet("xml",{style:"acid"});*/
+							pre.setAttribute ("class", "xml");
+							hljs.highlightBlock(pre);
+						 }, false);
+					 code.appendChild (link);
+				}
+				 if (crndot)
+				{
+					 var link = document.createElement("button");
+					 link.appendChild(document.createTextNode(" show dot "));
+					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (crndot);
+					 	/*$("#graphpre").snippet("xml",{style:"acid"});
+						 */
+							pre.setAttribute ("class", "");
+							hljs.highlightBlock(pre);
+					}, false); 
+					 code.appendChild (link);
+				}
+				 
+				 if (crnjson)
+				{
+					 var link = document.createElement("button");
+					 link.appendChild(document.createTextNode(" show json "));
+					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (JSON.stringify(JSON.parse(crnjson), null, 4));
+					 	/*$("#graphpre").snippet("javascript",{style:"acid"});
+						 */
+							pre.setAttribute ("class", "json");
+							hljs.highlightBlock(pre);
+					}, false); 
+					 code.appendChild (link);
+				}
+				 code.appendChild (pre);
+				 drawDiffGraphJS (crnjson);
 			 }
 			 else
 			 {
-				 $("#graphmldiff").html("");
+				 /*$("#graphmldiff").html("");
 				 $("#grpahmldifftab").hide ();
 				 $("#graphdifftab").hide ();
-				 showDiff ();
+				 showDiff ();*/
+				 $("#subtab_graph").hide ();
+				 $("#subtab_graph_code").html("");
 			 }
 			 
+				 $("#tab_diff_content").show ();
 				 $("#tab_diff").show ();
 				 //vis.draw(draw_options);
 				 MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 				 
+				 
 		 }).fail(function(xhr, textStatus, errorThrown)
 		 {
+			 // TODO
 			 alert(xhr.responseText);
 			 //alert(textStatus);
 			 // hide tabs
-			 $("#grpahmldifftab").hide ();
+			 /*$("#grpahmldifftab").hide ();
 			 $("#graphdifftab").hide ();
 			 $("#xmldifftab").hide ();
 			 $("#reportdifftab").hide ();
@@ -100,7 +217,7 @@ function compareModels(){
 			 $("#graphmldiff").html("error");
 			 var vis = new org.cytoscapeweb.Visualization("graphdiffflash", options);
 			 vis.draw({ network: '<graphml></graphml>' });
-			 showAbout();
+			 showAbout();*/
 		});
 		
 		
@@ -110,7 +227,8 @@ function compareModels(){
 	 }
 }
 
-function getInfo (preId, preVers){
+function getInfo (preId, preVers)
+{
 	if (!preId || !preVers)
 	{
 		object = $('select[name*="available"] option:selected');

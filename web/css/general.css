@@ -131,7 +131,9 @@ a.noborder
 	margin-top:30px;
 }
 
-#graphdiffflash, #hierarchydiffflash, #graphtreeflash, #graphmodelvizflash
+/* #graphdiffflash, #hierarchydiffflash, #graphtreeflash, #graphmodelvizflash*/
+#subtab_graph_graph,
+#subtab_hierarchy_graph
 {
 	height: 500px;
 }
@@ -192,6 +194,10 @@ option.my_public_model, table.mymodels td.public
 	margin-right: 10px;
 	vertical-align:middle;
 }
+#legend
+{
+	display:inline-block;
+}
 
 .yellowlegend, .redlegend, .bluelegend
 {
@@ -222,36 +228,36 @@ option.selected
 	background-color: #fff;
 	border: 1px solid #000;
 }
-#reportdiff td
+#subtab_report_content td
 {
 	color: black;
 }
-#reportdiff tr:nth-child(even) {background: #e6f2ff}
-#reportdiff tr:nth-child(odd) {background: #fff}
-#reportdiff th,
-#reportdiff td.highlighttd
+#subtab_report_content tr:nth-child(even) {background: #e6f2ff}
+#subtab_report_content tr:nth-child(odd) {background: #fff}
+#subtab_report_content th,
+#subtab_report_content td.highlighttd
 {
 	color: white;
 	background-color: #004A99;
 }
-#reportdiff .bives-attr
+#subtab_report_content .bives-attr
 {
 	color: #004A99;
 }
-#reportdiff .bives-delete
+#subtab_report_content .bives-delete
 {
 	color: #ff4141;
 }
-#reportdiff .bives-insert
+#subtab_report_content .bives-insert
 {
 	color: #31c149;
 }
-#reportdiff .bives-modified
+#subtab_report_content .bives-modified
 {
 	color: #db8838;
 }
-#reportdiff td, 
-#reportdiff th
+#subtab_report_content td, 
+#subtab_report_content th
 {
 	padding: 5px;
 }
@@ -263,4 +269,12 @@ option.selected
 {
 	min-height:100px;
 	vertical-align: middle;
+}
+
+#graphpre, #subtab_xml_content_pre, #hierarchypre
+{
+	background-color: #F8F7F0;
+	padding: 15px;
+	border-radius: 10px;
+	border: 1px dashed #DADACA;
 }
