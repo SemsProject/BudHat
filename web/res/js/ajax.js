@@ -38,6 +38,7 @@ function compareModels(){
 			 {
 				 $("#subtab_report_content").html (htmlreport);
 				$("#subtab_report").show ();
+				$("#subtab_report").click ();
 			 }
 			 else
 			 {
@@ -62,6 +63,7 @@ function compareModels(){
 					pre.setAttribute ("class", "xml");
 					pre.innerHTML = escapeHtml(xmldiff);
 					hljs.highlightBlock(pre);
+				$("#subtab_xml").click ();
 			 }
 			 else
 			 {
@@ -83,20 +85,25 @@ function compareModels(){
 				 {
 					 var link = document.createElement("button");
 					 link.appendChild(document.createTextNode(" show graphml "));
-					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (hierarchygraphml);
+					 link.addEventListener("click", function () {
+						 var pre = document.getElementById("hierarchypre");
+						 pre.innerHTML = escapeHtml (hierarchygraphml);
 							pre.setAttribute ("class", "xml");
 							hljs.highlightBlock(pre);
 						 
 						 
 					}, false);
 					 code.appendChild (link);
+					 drawHierarchyFlash (hierarchygraphml);
 				 }
 				 
 				 if (hierarchydot)
 				{
 					 var link = document.createElement("button");
 					 link.appendChild(document.createTextNode(" show dot "));
-					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (hierarchydot);
+					 link.addEventListener("click", function () {
+						 var pre = document.getElementById("hierarchypre");
+						 pre.innerHTML = escapeHtml (hierarchydot);
 							pre.setAttribute ("class", "");
 							hljs.highlightBlock(pre);
 						 
@@ -108,7 +115,9 @@ function compareModels(){
 				{
 					 var link = document.createElement("button");
 					 link.appendChild(document.createTextNode(" show json "));
-					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (JSON.stringify(JSON.parse(hierarchyjson), null, 4))
+					 link.addEventListener("click", function () {
+						 var pre = document.getElementById("hierarchypre");
+						 pre.innerHTML = escapeHtml (JSON.stringify(JSON.parse(hierarchyjson), null, 4))
 						 pre.setAttribute ("class", "json");
 							hljs.highlightBlock(pre);
 						 
@@ -117,6 +126,7 @@ function compareModels(){
 				}
 				 code.appendChild (pre);
 				 drawDiffHierarchyJS (hierarchyjson);
+				 $("#subtab_hierarchy").click ();
 			 }
 			 else
 			 {
@@ -149,6 +159,7 @@ function compareModels(){
 					 link.appendChild(document.createTextNode(" show graphml "));
 					 link.addEventListener("click", function ()
 						 {
+						 var pre = document.getElementById("graphpre");
 						 	pre.innerHTML = escapeHtml (crngraphml);
 						 	// TODO: delete jquery bullshit
 						 	/*$("#graphpre").snippet("xml",{style:"acid"});*/
@@ -156,12 +167,15 @@ function compareModels(){
 							hljs.highlightBlock(pre);
 						 }, false);
 					 code.appendChild (link);
+					 drawDiffFlash (crngraphml);
 				}
 				 if (crndot)
 				{
 					 var link = document.createElement("button");
 					 link.appendChild(document.createTextNode(" show dot "));
-					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (crndot);
+					 link.addEventListener("click", function () {
+						 var pre = document.getElementById("graphpre");
+						 pre.innerHTML = escapeHtml (crndot);
 					 	/*$("#graphpre").snippet("xml",{style:"acid"});
 						 */
 							pre.setAttribute ("class", "");
@@ -174,7 +188,9 @@ function compareModels(){
 				{
 					 var link = document.createElement("button");
 					 link.appendChild(document.createTextNode(" show json "));
-					 link.addEventListener("click", function () {pre.innerHTML = escapeHtml (JSON.stringify(JSON.parse(crnjson), null, 4));
+					 link.addEventListener("click", function () {
+						 var pre = document.getElementById("graphpre");
+						 pre.innerHTML = escapeHtml (JSON.stringify(JSON.parse(crnjson), null, 4));
 					 	/*$("#graphpre").snippet("javascript",{style:"acid"});
 						 */
 							pre.setAttribute ("class", "json");
@@ -184,6 +200,7 @@ function compareModels(){
 				}
 				 code.appendChild (pre);
 				 drawDiffGraphJS (crnjson);
+				 $("#subtab_graph").click ();
 			 }
 			 else
 			 {
@@ -197,6 +214,7 @@ function compareModels(){
 			 
 				 $("#tab_diff_content").show ();
 				 $("#tab_diff").show ();
+				 $("#tab_diff").click ();
 				 //vis.draw(draw_options);
 				 MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 				 
@@ -260,14 +278,15 @@ function getInfo (preId, preVers)
 		 //alert (graph);
 		 //alert (pic);
 		 
-		$("#info").html("<div><h1>Model Info</h1>" + data + "</div>");
+console.log (data);
+		 $("#tab_info_content").html("<div><h1>Model Info</h1>" + data + "</div>");
 		 //$("#xmldiff").addClass("xml");
 		 
-
+		
 		 $("#tab_info").show ();
-		 
+		 $("#tab_info").click ();
 
-		 showInfo ();
+		 //showInfo ();
 					});
 }
 
@@ -317,8 +336,6 @@ function genTree (preId, preVers){
 		 //$("#xmldiff").addClass("xml");
 		 
 		 //alert (data.graphmltree);
-
-		 $("#tab_tree").show ();
 		 
 
 		 graphmlTree = data.graphmltree;//escapeKaufmannsUnd(graph);
@@ -336,7 +353,7 @@ function genTree (preId, preVers){
 	if (matrix && versions)
 	{
 		var table = document.createElement("table");
-		table.setAttribute ("id", "diffmatrix");
+		table.setAttribute ("id", "diffmatrixtable");
 		
 		for (var row = 0; row < versions.length; row++)
 		{
@@ -368,7 +385,7 @@ function genTree (preId, preVers){
 			matrixDiff (id, versions[i], versions[j]);*/
 	}
 	
-	console.log (data);
+	//console.log (data);
 	
 	if (data.diffs)
 	{
@@ -377,8 +394,10 @@ function genTree (preId, preVers){
 			var diff = data.diffs[i];
 			if (diff.crndiff)
 			{
-				drawMatrixFlash (diff.crndiff, "diffmatrix-" + diff.versionA + "-" + diff.versionB);
-				drawMatrixFlash (diff.crndiff, "diffmatrix-" + diff.versionB + "-" + diff.versionA);
+				drawMatrixJs (diff.crndiff, "diffmatrix-" + diff.versionA + "-" + diff.versionB);
+				drawMatrixJs (diff.crndiff, "diffmatrix-" + diff.versionB + "-" + diff.versionA);
+				/*drawMatrixFlash (diff.crndiff, "diffmatrix-" + diff.versionA + "-" + diff.versionB);
+				drawMatrixFlash (diff.crndiff, "diffmatrix-" + diff.versionB + "-" + diff.versionA);*/
 			}
 			else
 			{
@@ -392,7 +411,9 @@ function genTree (preId, preVers){
 	
 	
         
-		 showGraphTree ();
+        
+				$("#tab_tree").show ();
+				$("#tab_tree").click ();
 					});
 
 }

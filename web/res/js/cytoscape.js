@@ -78,9 +78,9 @@ var visual_style = {
 	}
 };
 
-var options = {
-	swfPath: "swf/CytoscapeWeb",
-	flashInstallerPath: "swf/playerProductInstall"
+var flashOptions = {
+	swfPath: "/budhat/res/swf/CytoscapeWeb",
+	flashInstallerPath: "/budhat/res/swf/playerProductInstall"
 };
 
 
@@ -93,9 +93,23 @@ function drawDiffFlash (graph)
 		visualStyle: visual_style,
 	};
 	
-var diffFlash = new org.cytoscapeweb.Visualization("graphdiffflash", options);
+	var diffFlash = new org.cytoscapeweb.Visualization("subtab_graph_graph_flash", flashOptions);
 	diffFlash.draw(draw_options);
 }
+
+function drawHierarchyFlash (graph)
+{
+	var draw_options = {
+		network: graph,
+		edgeLabelsVisible: true,
+		layout: "CompoundSpringEmbedder",
+		visualStyle: visual_style,
+	};
+	
+	var diffFlash = new org.cytoscapeweb.Visualization("subtab_hierarchy_graph_flash", flashOptions);
+	diffFlash.draw(draw_options);
+}
+
 
 function drawTreeFlash (graph)
 {
@@ -106,7 +120,7 @@ function drawTreeFlash (graph)
 		visualStyle: visual_style,
 	};
 	
-	var treeFlash = new org.cytoscapeweb.Visualization("graphtreeflash", options);
+	var treeFlash = new org.cytoscapeweb.Visualization("graphtreeflash", flashOptions);
 	treeFlash.draw(draw_options);
 }
 
@@ -120,21 +134,8 @@ function drawMatrixFlash (graph, div)
 		panZoomControlVisible: false 
 	};
 	
-	var flash = new org.cytoscapeweb.Visualization(div, options);
+	var flash = new org.cytoscapeweb.Visualization(div, flashOptions);
 	flash.draw(draw_options);
-}
-
-function drawHierarchyFlash (graph)
-{
-	var draw_options = {
-		network: graph,
-		edgeLabelsVisible: true,
-		layout: "CompoundSpringEmbedder",
-		visualStyle: visual_style,
-	};
-	
-	var diffFlash = new org.cytoscapeweb.Visualization("hierarchydiffflash", options);
-	diffFlash.draw(draw_options);
 }
 
 function drawModelVizFlash (graph)
@@ -146,6 +147,6 @@ function drawModelVizFlash (graph)
 		visualStyle: visual_style,
 	};
 
-var treeFlash = new org.cytoscapeweb.Visualization("graphmodelvizflash", options);
+	var treeFlash = new org.cytoscapeweb.Visualization("graphmodelvizflash", flashOptions);
 	treeFlash.draw(draw_options);
 }

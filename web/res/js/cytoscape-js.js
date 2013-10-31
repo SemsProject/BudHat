@@ -1,7 +1,7 @@
-var options = {
+var cytoscapeJSoptions = {
 		  layout: {
-			    name: 'arbor',
-			    edgeLength: 5
+			    name: 'arbor'//,
+			    //edgeLength: 2
 			  },
 			  
 			  style: cytoscape.stylesheet()
@@ -9,14 +9,15 @@ var options = {
 			      .css({
 			        'content': 'data(name)',
 			        'text-valign': 'center',
-			        'color': '#000',
+							'color': '#000',
+							'background-color': '#fff',
 			        'border-width':'1',
 			        'border-color':'#666'
 			      })
 			  .selector('.compartment').css({
 			        'text-valign': 'bottom',
 			        'opacity':.9,
-			        'background-color': '#eee',
+			        'background-color': '#ddd',
 			        'border-width':'0'
 			    
 			  })
@@ -33,7 +34,9 @@ var options = {
 			      })
 			    .selector('edge')
 			      .css({
-			        'target-arrow-shape': 'triangle'
+							'target-arrow-shape': 'triangle',
+							'target-arrow-color': '#000',
+							'line-color': '#000'
 			      })
 			  .selector ('.bives-unkwnmod').css({
 			        'target-arrow-shape': 'circle',
@@ -58,9 +61,9 @@ var options = {
 			        'line-color': '#f00'
 			  })
 			  .selector ('.bives-inserted').css({
-			        'background-color': '#99f',
-			        'target-arrow-color': '#99f',
-			        'line-color': '#99f'
+			        'background-color': '#44f',
+			        'target-arrow-color': '#44f',
+			        'line-color': '#44f'
 			  })
 			  .selector ('.bives-modified').css({
 			        'background-color': '#ff0',
@@ -79,20 +82,31 @@ var options = {
 function drawDiffGraphJS (graph)
 {console.log(graph);
 graph = JSON.parse(graph);
-	options.elements = graph.elements;
-	  $("#subtab_graph_graph").html("");
+cytoscapeJSoptions.elements = graph.elements;
+	  $("#subtab_graph_graph_js").html("");
 	  console.log(graph.elements);
 
-	  $("#subtab_graph_graph").cytoscape(options);
+		$("#subtab_graph_graph_js").cytoscape(cytoscapeJSoptions);
 	
 }
 function drawDiffHierarchyJS (graph)
 {console.log(graph);
 graph = JSON.parse(graph);
-	options.elements = graph.elements;
-	  $("#subtab_hierarchy_graph").html("");
+cytoscapeJSoptions.elements = graph.elements;
+	$("#subtab_hierarchy_graph_js").html("");
 	  console.log(graph.elements);
 
-	  $("#subtab_hierarchy_graph").cytoscape(options);
+		$("#subtab_hierarchy_graph_js").cytoscape(cytoscapeJSoptions);
+	
+}
+
+function drawMatrixJs (graph, divid)
+{//console.log(graph);
+	graph = JSON.parse(graph);
+	cytoscapeJSoptions.elements = graph.elements;
+	$("#" + divid).html("");
+	//console.log(graph.elements);
+	
+	$("#" + divid).cytoscape(cytoscapeJSoptions);
 	
 }

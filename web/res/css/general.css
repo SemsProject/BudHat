@@ -8,7 +8,6 @@ body {
 	font-size:12px;
 	background-color:#fff;
 	color: #004A99;
-	/*background-image:url(../images/body_bg.png)*/
 }
 
 #main
@@ -124,6 +123,7 @@ a.noborder
 {
 	/*text-align: center;*/
 	width: 100%;
+	height: 550px;
 }
 
 #graphdiff, #graphtree
@@ -134,6 +134,13 @@ a.noborder
 /* #graphdiffflash, #hierarchydiffflash, #graphtreeflash, #graphmodelvizflash*/
 #subtab_graph_graph,
 #subtab_hierarchy_graph
+{
+	height: 550px;
+}
+#subtab_hierarchy_graph_js,
+#subtab_graph_graph_js,
+#subtab_hierarchy_graph_flash,
+#subtab_graph_graph_flash
 {
 	height: 500px;
 }
@@ -222,12 +229,6 @@ option.selected
 {
 	color: red;
 }
-#vergleichen input
-{
-	color: #004A99;
-	background-color: #fff;
-	border: 1px solid #000;
-}
 #subtab_report_content td
 {
 	color: black;
@@ -261,13 +262,14 @@ option.selected
 {
 	padding: 5px;
 }
-#diffmatrix
+#diffmatrixtable
 {
 	width:100%;
+	table-layout:fixed;
 }
 #diffmatrix td div
 {
-	min-height:100px;
+	min-height:250px;
 	vertical-align: middle;
 }
 
@@ -278,3 +280,13 @@ option.selected
 	border-radius: 10px;
 	border: 1px dashed #DADACA;
 }
+
+img.text
+{
+	height:1em;
+}
+
+/*#diffmatrixtable td
+{
+	min-height: 120px;
+}*/

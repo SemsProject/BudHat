@@ -75,6 +75,13 @@ public class CellMLDiffer
 	
 	private static final long	serialVersionUID	= 9148294324749188855L;
 
+	public static String crndiffJson (ModelVersion bmA, ModelVersion bmB) throws BivesDocumentParseException, FileNotFoundException, ParserConfigurationException, SAXException, IOException, BivesConsistencyException, BivesConnectionException, BivesCellMLParseException, BivesLogicalException, URISyntaxException, BivesImportException
+	{
+		CellMLDiff differ = new CellMLDiff (bmA.getModel (), bmB.getModel ());//file1, file2);
+		differ.mapTrees ();
+		return differ.getCRNJsonGraph ();
+	}
+	
 	public static String crndiff (ModelVersion bmA, ModelVersion bmB) throws BivesDocumentParseException, FileNotFoundException, ParserConfigurationException, SAXException, IOException, BivesConsistencyException, BivesConnectionException, BivesCellMLParseException, BivesLogicalException, URISyntaxException, BivesImportException
 	{
 		CellMLDiff differ = new CellMLDiff (bmA.getModel (), bmB.getModel ());//file1, file2);

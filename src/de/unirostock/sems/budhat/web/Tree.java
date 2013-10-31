@@ -128,11 +128,11 @@ extends WebModule
 		  		
 		  		else if (versionA.getModelType ().equals ("SBML"))
 		  		{
-		  				diff.put ("crndiff", SBMLDiffer.crndiff (versionA, versionB));
+		  				diff.put ("crndiff", SBMLDiffer.crndiffJson (versionA, versionB));
 		  		}
 		  		else if (versionA.getModelType ().equals ("CellML"))
 		  		{
-			  			diff.put ("crndiff", CellMLDiffer.crndiff (versionA, versionB));
+			  			diff.put ("crndiff", CellMLDiffer.crndiffJson (versionA, versionB));
 		  		}
 		  		arr.add (diff);
   			}
